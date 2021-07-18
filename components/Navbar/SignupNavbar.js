@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 
 /*---> Component <---*/
-function SignNavbar() {
+export default function SignNavbar() {
   return (
     <NavbarWrapper>
       <LogoWrapper>
@@ -41,5 +41,3 @@ export const Logo = styled.p`
   color: #1399ff;
 	cursor: pointer;
 `
-
-export default SignNavbar
