@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 
 /*---> Component <---*/
-function SignNavbar({ ...restProps }) {
+function SignNavbar() {
   return (
     <NavbarWrapper>
       <LogoWrapper>
