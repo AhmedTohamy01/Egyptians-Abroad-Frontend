@@ -40,7 +40,7 @@ export default function ConnectAccrossGlobe() {
             </Link>
           </LinksWrapper>
           <ButtonsWrapper>
-            <Link href='/signin' passHref>
+            <Link href='/login' passHref>
               <LoginButton
                 variant='contained'
               >
@@ -82,10 +82,10 @@ export default function ConnectAccrossGlobe() {
               </SectionButton>
             </Link>
           </SectionButtonWrapper>
-          <Link href='/signin' passHref>
+          <Link href='/login' passHref>
             <LoginLinkWrapper>
               Already have account ?{' '}
-              <Link href='/signin' passHref>
+              <Link href='/login' passHref>
                 <LoginLink>
                   Login
                 </LoginLink>
