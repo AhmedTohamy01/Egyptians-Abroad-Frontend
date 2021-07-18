@@ -17,6 +17,9 @@ export default {
     signup(payload) {
       return apiClient.post('/users/signup', payload)
     },
+    login(payload) {
+      return apiClient.post('/users/login', payload)
+    },
   },
   post: {},
   comment: {},
