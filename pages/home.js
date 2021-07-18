@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import React from 'react'
+import HomeNavbar from '../components/Navbar/HomeNavbar'
 
 export default function LandingPage() {
   return (
@@ -19,7 +20,7 @@ export default function LandingPage() {
           rel='stylesheet'
         />
       </Head>
-      This is home page!
+      <HomeNavbar />
     </>
   )
 }
