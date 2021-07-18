@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import { MainContext } from '../../context/MainContext'
+import React from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
@@ -7,7 +6,6 @@ import { QuestionAnswer } from '@styled-icons/material-twotone'
 
 /*---> Component <---*/
 export default function AskAboutAnything() {
-  const { setActiveSignForm } = useContext(MainContext)
   return (
     <Wrapper>
       <Title>
@@ -20,13 +18,8 @@ export default function AskAboutAnything() {
         you will never find in Google!
       </SubTitle>
       <SectionButtonWrapper>
-        <Link href='/sign' passHref>
-          <SectionButton
-            variant='contained'
-            onClick={() => setActiveSignForm('signup')}
-          >
-            Ask Now
-          </SectionButton>
+        <Link href='/signup' passHref>
+          <SectionButton variant='contained'>Ask Now</SectionButton>
         </Link>
       </SectionButtonWrapper>
     </Wrapper>
