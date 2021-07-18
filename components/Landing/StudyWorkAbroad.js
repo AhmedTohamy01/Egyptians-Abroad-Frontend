@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import { MainContext } from '../../context/MainContext'
+import React from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
@@ -7,8 +6,6 @@ import { PlaneTakeOff } from '@styled-icons/boxicons-solid'
 
 /*---> Component <---*/
 export default function StudyWorkAbroad() {
-  const { setActiveSignForm } = useContext(MainContext)
-
   return (
     <Wrapper>
       <Title>
@@ -21,10 +18,9 @@ export default function StudyWorkAbroad() {
         experience.
       </SubTitle>
       <SectionButtonWrapper>
-        <Link href='/sign' passHref>
+        <Link href='/signup' passHref>
           <SectionButton
             variant='contained'
-            onClick={() => setActiveSignForm('signup')}
           >
             Ask Now
           </SectionButton>
@@ -49,7 +45,6 @@ export const Title = styled.p`
   width: 800px;
   margin-right: auto;
   margin-left: auto;
-  /* margin-top: 184px; */
   margin-top: 90px;
   margin-bottom: 40px;
 
@@ -103,12 +98,7 @@ export const SubTitle = styled.p`
 export const SectionButtonWrapper = styled.div`
   /* border: 1px solid red; */
   text-align: center;
-  /* margin-bottom: 195px; */
   margin-bottom: 90px;
-
-  /* @media (max-width: 1024px) {
-    margin-bottom: 87px;
-  } */
 `
 
 export const SectionButton = styled(Button)`

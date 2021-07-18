@@ -19,11 +19,13 @@
     "@styled-icons/heroicons-solid": "^10.34.0",
     "@styled-icons/ionicons-sharp": "^10.34.0",
     "@styled-icons/material-twotone": "^10.34.0",
+    "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.13.2",
     "next": "11.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "styled-components": "^5.3.0"
+    "styled-components": "^5.3.0",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "eslint": "7.31.0",

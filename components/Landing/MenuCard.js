@@ -1,50 +1,37 @@
-import React, { useContext } from 'react'
-import { MainContext } from '../../context/MainContext'
+import React from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
 
 /*---> Component <---*/
 function MenuCard() {
-  const { setActiveSignForm } = useContext(MainContext)
-
   return (
     <>
       <Wrapper>
         <LinkWrapper>
-          <Link href='/test' passHref>
-            <MenuLink onClick={() => setActiveSignForm('signup')}>
-              Network
-            </MenuLink>
+          <Link href='/signup' passHref>
+            <MenuLink>Network</MenuLink>
           </Link>
         </LinkWrapper>
         <LinkWrapper>
-          <Link href='/test' passHref>
-            <MenuLink onClick={() => setActiveSignForm('signup')}>
-              Ask Questions
-            </MenuLink>
+          <Link href='/signup' passHref>
+            <MenuLink>Ask Questions</MenuLink>
           </Link>
         </LinkWrapper>
         <LinkWrapper>
-          <Link href='/test' passHref>
+          <Link href='/signup' passHref>
             <MenuLink onClick={() => setActiveSignForm('signup')}>
               Answer Questions
             </MenuLink>
           </Link>
         </LinkWrapper>
         <ButtonsWrapper>
-          <Link href='/sign' passHref>
-            <LoginButton
-              variant='contained'
-              onClick={() => setActiveSignForm('signin')}
-            >
-              Login
-            </LoginButton>
+          <Link href='/signup' passHref>
+            <LoginButton variant='contained'>Login</LoginButton>
           </Link>
-          <Link href='/sign' passHref>
+          <Link href='/signup' passHref>
             <SignupButton
               variant='contained'
-              onClick={() => setActiveSignForm('signup')}
             >
               Signup
             </SignupButton>
@@ -103,7 +90,6 @@ export const SignupButton = styled(Button)`
   font-style: normal !important;
   line-height: normal !important;
   letter-spacing: normal !important;
-
   margin-left: 20px !important;
 `
 
