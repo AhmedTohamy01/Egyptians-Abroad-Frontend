@@ -42,12 +42,12 @@ export default function LandingPage() {
           </MenuCardOverlay>
         ) : null}
         <ConnectAccrossGlobe />
-				<AskAboutAnything />
-				<FindPeopleToHelp />
+        <AskAboutAnything />
+        <FindPeopleToHelp />
+        <ExpandYourNetwork />
         <FindCoFounder id='FindCoFounder' />
         <StudyWorkAbroad />
         <VisaImmigration />
-        <ExpandYourNetwork />
         <ReadyToDive />
         <Footer />
       </PageWrapper>
