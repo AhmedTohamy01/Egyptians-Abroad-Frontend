@@ -67,11 +67,12 @@ export default function SignupPage() {
 
     if (isValidEmail() && isValidName() && isValidPassword()) {
       try {
-        await axiosAPI.user.signup({ name, email, password })
+        const user = await axiosAPI.user.signup({ name, email, password })
+				await localStorage.setItem('EgAbroadToken', user.data.tokens[user.data.tokens.length - 1].token)
         setName('')
         setEmail('')
         setPassword('')
-        router.push('/home')
+        window.location.replace('/home')
       } catch (e) {
         setError(e.message)
         setShowErrorMessage(true)
