@@ -10,7 +10,6 @@ import { Close } from "@styled-icons/evaicons-solid/Close"
 /*---> Component <---*/
 export default function ConnectAccrossGlobe() {
   const { showMenuCard, setShowMenuCard } = useContext(MainContext)
-  const { setActiveSignForm } = useContext(MainContext)
 
   function hanldeMenuIconClick() {
     setShowMenuCard(!showMenuCard)
@@ -24,35 +23,33 @@ export default function ConnectAccrossGlobe() {
             <Logo>EgyptiansAbroad</Logo>
           </LogoWrapper>
           <LinksWrapper>
-            <Link href='/sign' passHref>
-              <NavbarLink onClick={() => setActiveSignForm('signup')}>
+            <Link href='/signup' passHref>
+              <NavbarLink>
                 Networking
               </NavbarLink>
             </Link>
-            <Link href='/sign' passHref>
-              <NavbarLink onClick={() => setActiveSignForm('signup')}>
+            <Link href='/signup' passHref>
+              <NavbarLink>
                 Ask Questions
               </NavbarLink>
             </Link>
-            <Link href='/sign' passHref>
-              <NavbarLink onClick={() => setActiveSignForm('signup')}>
+            <Link href='/signup' passHref>
+              <NavbarLink>
                 Answer Questions
               </NavbarLink>
             </Link>
           </LinksWrapper>
           <ButtonsWrapper>
-            <Link href='/sign' passHref>
+            <Link href='/signin' passHref>
               <LoginButton
                 variant='contained'
-                onClick={() => setActiveSignForm('signin')}
               >
                 Login
               </LoginButton>
             </Link>
-            <Link href='/sign' passHref>
+            <Link href='/signup' passHref>
               <SignupButton
                 variant='contained'
-                onClick={() => setActiveSignForm('signup')}
               >
                 Sign Up
               </SignupButton>
@@ -77,20 +74,19 @@ export default function ConnectAccrossGlobe() {
             <span>all over the world</span>.
           </SubTitle>
           <SectionButtonWrapper>
-            <Link href='/sign' passHref>
+            <Link href='/signup' passHref>
               <SectionButton
                 variant='contained'
-                onClick={() => setActiveSignForm('signup')}
               >
                 Connect Now
               </SectionButton>
             </Link>
           </SectionButtonWrapper>
-          <Link href='/sign' passHref>
+          <Link href='/signin' passHref>
             <LoginLinkWrapper>
               Already have account ?{' '}
-              <Link href='/sign' passHref>
-                <LoginLink onClick={() => setActiveSignForm('signin')}>
+              <Link href='/signin' passHref>
+                <LoginLink>
                   Login
                 </LoginLink>
               </Link>
