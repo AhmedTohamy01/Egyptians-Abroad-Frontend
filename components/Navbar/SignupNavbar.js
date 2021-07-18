@@ -7,7 +7,9 @@ function SignNavbar({ ...restProps }) {
   return (
     <NavbarWrapper>
       <LogoWrapper>
-        <Logo>EgyptiansAbroad</Logo>
+        <Link href='/'>
+          <Logo>EgyptiansAbroad</Logo>
+        </Link>
       </LogoWrapper>
     </NavbarWrapper>
   )
@@ -37,6 +39,7 @@ export const Logo = styled.p`
   font-family: 'Caveat', cursive;
   font-weight: 700;
   color: #1399ff;
+	cursor: pointer;
 `
 
 export default SignNavbar
