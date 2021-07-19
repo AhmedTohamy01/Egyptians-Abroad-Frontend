@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import HomeNavbar from '../components/Navbar/HomeNavbar'
 
-export default function LandingPage() {
+export default function HomePage() {
   return (
     <>
       <Head>
