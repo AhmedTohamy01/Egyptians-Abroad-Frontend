@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import React from 'react'
 import HomeNavbar from '../components/Navbar/HomeNavbar'
+import PrivateRoute from '../custom-routes/PrivateRoute'
 
 export default function HomePage() {
   return (
-    <>
+    <PrivateRoute>
       <Head>
         <title>Egyptians Abroad</title>
         <meta charSet='utf-8' />
@@ -21,6 +22,6 @@ export default function HomePage() {
         />
       </Head>
       <HomeNavbar />
-    </>
+    </PrivateRoute>
   )
 }
