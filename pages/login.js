@@ -51,10 +51,11 @@ export default function LoginPage() {
 
     if (isValidEmail() && isValidPassword()) {
       try {
-        await axiosAPI.user.login({ email, password })
+        const user = await axiosAPI.user.login({ email, password })
+				await localStorage.setItem('EgAbroadToken', user.data.tokens[user.data.tokens.length - 1].token)
         setEmail('')
         setPassword('')
-        router.push('/home')
+        window.location.replace('/home')
       } catch (e) {
         setValidEmail(false)
         setValidPassword(false)
