@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import { MainContext } from '../../context/MainContext'
 
 /*---> Component <---*/
 export default function SignNavbar() {
+	const { setShowMenuCard } = useContext(MainContext)
   return (
     <NavbarWrapper>
       <LogoWrapper>
         <Link href='/'>
-          <Logo>EgyptiansAbroad</Logo>
+          <Logo onClick={() => setShowMenuCard(false)}>EgyptiansAbroad</Logo>
         </Link>
       </LogoWrapper>
     </NavbarWrapper>
