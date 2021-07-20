@@ -31,9 +31,12 @@ export default {
     getUserInfo() {
       return apiClient.get('/users/me')
     },
-		getUserAvatar(userId) {
-			return `${getBaseUrl()}/users/${userId}/avatar`
-		}
+    getUserAvatar(userId) {
+      return `${getBaseUrl()}/users/${userId}/avatar`
+    },
+    logout() {
+      return apiClient.post('/users/logout')
+    },
   },
   post: {},
   comment: {},
