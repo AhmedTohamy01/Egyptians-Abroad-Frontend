@@ -26,7 +26,7 @@ function MenuCard() {
           </Link>
         </LinkWrapper>
         <ButtonsWrapper>
-          <Link href='/signup' passHref>
+          <Link href='/login' passHref>
             <LoginButton variant='contained'>Login</LoginButton>
           </Link>
           <Link href='/signup' passHref>
