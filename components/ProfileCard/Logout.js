@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { MainContext } from '../../context/MainContext'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import axiosAPI from '../../api/axiosAPI'
 
 /*---> Component <---*/
 export default function Logout() {
@@ -14,8 +15,14 @@ export default function Logout() {
     iconColor === 'blue' ? setIconColor('white') : setIconColor('blue')
   }
 
-  function handleSignout() {
-    
+  async function handleSignout() {
+		try {
+			await axiosAPI.user.logout()
+			await localStorage.removeItem('EgAbroadToken')
+			window.location.replace('/')
+		} catch(e) {
+			console.log(e)
+		}
   }
 
   return (
