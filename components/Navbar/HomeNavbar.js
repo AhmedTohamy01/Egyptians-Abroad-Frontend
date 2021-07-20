@@ -1,18 +1,33 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import axiosAPI from '../../api/axiosAPI'
+import ProfileCardCompound from '../ProfileCard/ProfileCardCompound'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import { MainContext } from '../../context/MainContext'
 
 /*---> Component <---*/
 export default function HomeNavbar() {
   const [userData, setUserData] = useState(null)
   const [avatarLink, setAvatarLink] = useState(null)
-	const [error, setError] = useState(null)
+  const [error, setError] = useState(null)
+  const { showProfileCard, setShowProfileCard } = useContext(MainContext)
+
+  function handleClickAway() {
+    setShowProfileCard(false)
+  }
+
+	function handleProfileClick() {
+    setShowProfileCard(!showProfileCard)
+    // setShowAddCard(false)
+  }
 
   useEffect(async () => {
     try {
       const user = await axiosAPI.user.getUserInfo()
-      const avatar = user.data.avatar ?  await axiosAPI.user.getUserAvatar(user.data._id) : null
+      const avatar = user.data.avatar
+        ? await axiosAPI.user.getUserAvatar(user.data._id)
+        : null
       setUserData(user)
       setAvatarLink(avatar)
     } catch (e) {
@@ -20,35 +35,40 @@ export default function HomeNavbar() {
     }
   }, [])
 
-	if (!userData) {
+  if (!userData) {
     return <>Loading .... </>
   }
-	
-	if (error) {
+
+  if (error) {
     return <>Something went wrong, please try again later ... </>
   }
 
   return (
-    <NavbarWrapper>
-      <Link href='/'>
-        <LogoWrapper>
-          <LogoIcon>EgyptiansAbroad</LogoIcon>
-        </LogoWrapper>
-      </Link>
-      <UserInfoWrapper>
-        <LinksWrapper>
-          <UsernameWrapper>
-            <Username>{userData?.data.name}</Username>
-          </UsernameWrapper>
-          <AvatarWrapper>
-            <Avatar
-              src={avatarLink || '/images/avatar-sample.png'}
-              alt='small avatar'
-            />
-          </AvatarWrapper>
-        </LinksWrapper>
-      </UserInfoWrapper>
-    </NavbarWrapper>
+    <>
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <NavbarWrapper>
+          <LogoWrapper>
+            <Link href='/'>
+              <LogoIcon>EgyptiansAbroad</LogoIcon>
+            </Link>
+          </LogoWrapper>
+          <UserInfoWrapper>
+            <LinksWrapper onClick={handleProfileClick}>
+              <UsernameWrapper>
+                <Username>{userData?.data.name}</Username>
+              </UsernameWrapper>
+              <AvatarWrapper>
+                <Avatar
+                  src={avatarLink || '/images/avatar-sample.png'}
+                  alt='small avatar'
+                />
+              </AvatarWrapper>
+            </LinksWrapper>
+            <ProfileCardCompound />
+          </UserInfoWrapper>
+        </NavbarWrapper>
+      </ClickAwayListener>
+    </>
   )
 }
 
@@ -81,18 +101,19 @@ export const LogoIcon = styled.p`
 `
 
 export const UserInfoWrapper = styled.div`
-  /* border: solid red; */
+  /* border: 1px solid red; */
   display: flex;
   align-items: center;
   flex-direction: column;
+	max-height: 45px;
 `
 
 export const LinksWrapper = styled.div`
-  /* border: solid green; */
+  /* border: 1px solid green; */
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  /* width: 175px; */
+  width: 175px;
 `
 
 export const UsernameWrapper = styled.div`
