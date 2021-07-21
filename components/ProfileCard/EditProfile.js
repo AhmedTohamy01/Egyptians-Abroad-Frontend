@@ -11,7 +11,7 @@ export default function EditProfile() {
   }
 
   return (
-    <Link href='#'>
+    <Link href='/profile-update'>
       <Wrapper
         onMouseEnter={() => handleHover()}
         onMouseLeave={() => handleHover()}
