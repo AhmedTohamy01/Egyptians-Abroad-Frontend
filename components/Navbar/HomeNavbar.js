@@ -59,7 +59,7 @@ export default function HomeNavbar() {
               </UsernameWrapper>
               <AvatarWrapper>
                 <Avatar
-                  src={avatarLink || '/images/avatar-sample.png'}
+                  src={avatarLink || '/images/avatar.png'}
                   alt='small avatar'
                 />
               </AvatarWrapper>
