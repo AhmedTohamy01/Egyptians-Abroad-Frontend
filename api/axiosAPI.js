@@ -31,6 +31,9 @@ export default {
     getUserInfo() {
       return apiClient.get('/users/me')
     },
+    updateUserInfo(payload) {
+      return apiClient.patch('/users/me', payload)
+    },
     getUserAvatar(userId) {
       return `${getBaseUrl()}/users/${userId}/avatar`
     },
