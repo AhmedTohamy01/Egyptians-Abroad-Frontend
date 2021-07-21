@@ -34,6 +34,9 @@ export default {
     updateUserInfo(payload) {
       return apiClient.patch('/users/me', payload)
     },
+    uploadUserAvatar(payload) {
+      return apiClient.post('/users/me/avatar', payload)
+    },
     getUserAvatar(userId) {
       return `${getBaseUrl()}/users/${userId}/avatar`
     },
