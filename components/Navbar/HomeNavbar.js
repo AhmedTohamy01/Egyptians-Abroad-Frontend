@@ -12,12 +12,12 @@ export default function HomeNavbar() {
   const [avatarLink, setAvatarLink] = useState(null)
   const [error, setError] = useState(null)
   const { showProfileCard, setShowProfileCard } = useContext(MainContext)
-
+	
   function handleClickAway() {
     setShowProfileCard(false)
   }
 
-	function handleProfileClick() {
+  function handleProfileClick() {
     setShowProfileCard(!showProfileCard)
     // setShowAddCard(false)
   }
@@ -29,7 +29,9 @@ export default function HomeNavbar() {
         ? await axiosAPI.user.getUserAvatar(user.data._id)
         : null
       setUserData(user)
-      setAvatarLink(avatar)
+			if (user.avatar) {
+				setAvatarLink(avatar)
+      }
     } catch (e) {
       setError(e)
     }
@@ -105,7 +107,7 @@ export const UserInfoWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-	max-height: 45px;
+  max-height: 45px;
 `
 
 export const LinksWrapper = styled.div`
