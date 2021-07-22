@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { MainContext } from '../../context/MainContext'
 
 /*---> Component <---*/
 export default function MyProfile() {
   const [iconColor, setIconColor] = useState('blue')
+  const { showProfileCard, setShowProfileCard } = useContext(MainContext)
 
   function handleHover() {
     iconColor === 'blue' ? setIconColor('white') : setIconColor('blue')
@@ -15,6 +17,7 @@ export default function MyProfile() {
       <Wrapper
         onMouseEnter={() => handleHover()}
         onMouseLeave={() => handleHover()}
+        onClick={() => setShowProfileCard(false)}
       >
         <Image
           src={`images/profile-card/my-profile-${iconColor}.svg`}
@@ -39,7 +42,7 @@ export const Wrapper = styled.div`
   padding: 20px 10px 20px 20px;
   border-radius: 19px;
   height: 12px;
-	cursor: pointer;
+  cursor: pointer;
 
   :hover {
     background-color: #149bff;
@@ -52,5 +55,3 @@ export const Image = styled.img`
   height: 15px;
   margin-right: 15px;
 `
-
-
