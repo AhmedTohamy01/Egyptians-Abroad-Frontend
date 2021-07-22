@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import { MainContext } from '../../context/MainContext'
 
 /*---> Component <---*/
 export default function EditProfile() {
   const [iconColor, setIconColor] = useState('blue')
+  const { showProfileCard, setShowProfileCard } = useContext(MainContext)
 
   function handleHover() {
     iconColor === 'blue' ? setIconColor('white') : setIconColor('blue')
@@ -15,6 +17,7 @@ export default function EditProfile() {
       <Wrapper
         onMouseEnter={() => handleHover()}
         onMouseLeave={() => handleHover()}
+        onClick={() => setShowProfileCard(false)}
       >
         <Image
           src={`images/profile-card/edit-profile-${iconColor}.svg`}
