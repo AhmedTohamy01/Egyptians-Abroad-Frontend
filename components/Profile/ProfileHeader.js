@@ -15,9 +15,7 @@ export default function ProfileHeader() {
         ? await axiosAPI.user.getUserAvatar(user.data._id)
         : null
       setUserData(user)
-      if (user.avatar) {
-        setAvatarLink(avatar)
-      }
+			setAvatarLink(avatar)
     } catch (e) {
       setError(e)
     }
