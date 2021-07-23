@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
 import AvatarEditor from 'react-avatar-editor'
@@ -16,11 +16,24 @@ export default function UploadPhoto() {
   const [editor, setEditor] = useState(null)
   const [position, setPosition] = useState({ x: 0.5, y: 0.5 })
   const [scale, setScale] = useState(1)
+  const [avatarLink, setAvatarLink] = useState(null)
+  const [error, setError] = useState(null)
+
+  useEffect(async () => {
+    try {
+      const user = await axiosAPI.user.getUserInfo()
+      const avatar = user.data.avatar
+        ? await axiosAPI.user.getUserAvatar(user.data._id)
+        : '/images/avatar.png'
+      setAvatarLink(avatar)
+    } catch (e) {
+      setError(e)
+    }
+  }, [])
 
   function handleNewImageSelect(event) {
-    console.log('event.target', event.target.files)
-
     setNewImageAdded(true)
+		setNewImageURL(null)
     setNewImage(event.target.files[0])
     setScale(1)
   }
@@ -36,6 +49,13 @@ export default function UploadPhoto() {
 
   async function handleSave(event) {
     event.preventDefault()
+    setLoading(true)
+    const formData = new FormData()
+    formData.append('avatar', newImage)
+    const user = await axiosAPI.user.getUserInfo()
+    await axiosAPI.user.uploadUserAvatar(formData)
+    const uploadedImage = await axiosAPI.user.getUserAvatar(user.data._id)
+  	setNewImageURL(uploadedImage)
     setNewImageAdded(false)
     setLoading(false)
   }
@@ -58,7 +78,7 @@ export default function UploadPhoto() {
             {newImageAdded ? (
               <AvatarEditor
                 ref={(editor) => setEditor(editor)}
-                image={newImageAdded ? newImage : profileImage}
+                image={newImageAdded ? newImage : avatarLink}
                 width={250}
                 height={250}
                 border={10}
@@ -66,13 +86,11 @@ export default function UploadPhoto() {
                 rotate={0}
                 borderRadius={500}
                 scale={parseFloat(scale)}
+                position={position}
                 onPositionChange={handlePositionChange}
               />
             ) : (
-              <Image
-                src={newImageURL || 'images/avatar.png'}
-                alt='avatar big'
-              />
+              <Image src={newImageURL || avatarLink} alt='avatar big' />
             )}
           </ImageWrapper>
 
@@ -95,7 +113,7 @@ export default function UploadPhoto() {
             </UploadLabel>
           </UploadButtonWrapper>
 
-          <Spinner loading={loading} src='images/spinner.gif' />
+          <Spinner loading={loading} src='/images/spinner.gif' />
 
           <ZoomWrapper newImageAdded={newImageAdded} loading={loading}>
             <ZoomLabel>Zoom:</ZoomLabel>
