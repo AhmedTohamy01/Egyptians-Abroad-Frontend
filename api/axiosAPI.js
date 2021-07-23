@@ -31,6 +31,9 @@ export default {
     getUserInfo() {
       return apiClient.get('/users/me')
     },
+    getUserPosts() {
+      return apiClient.get('/users/me/posts')
+    },
     updateUserInfo(payload) {
       return apiClient.patch('/users/me', payload)
     },
