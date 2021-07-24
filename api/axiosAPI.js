@@ -31,8 +31,10 @@ export default {
     getUserInfo() {
       return apiClient.get('/users/me')
     },
-    getUserPosts() {
-      return apiClient.get('/users/me/posts')
+    getUserPosts(limit, skip) {
+      return apiClient.get(
+        `/posts/me?limit=${limit}&skip=${skip}&sortBy=createdAt:desc`
+      )
     },
     updateUserInfo(payload) {
       return apiClient.patch('/users/me', payload)
