@@ -1,11 +1,13 @@
-import Head from 'next/head'
-import React from 'react'
-import HomeNavbar from '../components/Navbar/HomeNavbar'
 import PrivateRoute from '../custom-routes/PrivateRoute'
+import ProfileHeader from '../components/Profile/ProfileHeader'
+import HomeNavbar from '../components/Navbar/HomeNavbar'
+import Head from 'next/head'
+import Footer from '../components/Footer/Footer'
+import ProfileBody from '../components/Profile/ProfileBody'
 
-export default function HomePage() {
+export default function ProfilePage() {
   return (
-    <PrivateRoute>
+    <>
       <Head>
         <title>Egyptians Abroad</title>
         <meta charSet='utf-8' />
@@ -21,7 +23,12 @@ export default function HomePage() {
           rel='stylesheet'
         />
       </Head>
-      <HomeNavbar />
-    </PrivateRoute>
+      <PrivateRoute>
+        <HomeNavbar />
+        <ProfileHeader />
+        <ProfileBody />
+        <Footer />
+      </PrivateRoute>
+    </>
   )
 }

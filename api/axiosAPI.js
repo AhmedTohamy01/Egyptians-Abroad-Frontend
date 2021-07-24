@@ -1,5 +1,12 @@
 import axios from 'axios'
 
+let token = ''
+// this code because Next.js don't give access to window object in SSR mode.
+if (typeof window !== 'undefined') {
+  token = window.localStorage.getItem('EgAbroadToken')
+  // here we can access window object
+}
+
 const getBaseUrl = () => {
   return 'http://localhost:5000'
 }
@@ -9,6 +16,7 @@ const apiClient = axios.create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
   },
 })
 
@@ -19,6 +27,26 @@ export default {
     },
     login(payload) {
       return apiClient.post('/users/login', payload)
+    },
+    getUserInfo() {
+      return apiClient.get('/users/me')
+    },
+    getUserPosts(limit, skip) {
+      return apiClient.get(
+        `/posts/me?limit=${limit}&skip=${skip}&sortBy=createdAt:desc`
+      )
+    },
+    updateUserInfo(payload) {
+      return apiClient.patch('/users/me', payload)
+    },
+    uploadUserAvatar(payload) {
+      return apiClient.post('/users/me/avatar', payload)
+    },
+    getUserAvatar(userId) {
+      return `${getBaseUrl()}/users/${userId}/avatar`
+    },
+    logout() {
+      return apiClient.post('/users/logout')
     },
   },
   post: {},
