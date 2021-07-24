@@ -15,8 +15,8 @@ export default function ProfileHeader() {
   
   useEffect(async () => {	
     try {
-      const user = await axiosAPI.user.getUserInfo()
-      const userNewPosts = await axiosAPI.user.getUserPosts(limit, skip)
+      const user = await axiosAPI.user.getMyUserInfo()
+      const userNewPosts = await axiosAPI.post.getMyUserPosts(limit, skip)
       const avatar = user.data.avatar
         ? await axiosAPI.user.getUserAvatar(user.data._id)
         : null
