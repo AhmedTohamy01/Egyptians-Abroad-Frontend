@@ -2,6 +2,8 @@ import PrivateRoute from '../custom-routes/PrivateRoute'
 import ProfileHeader from '../components/Profile/ProfileHeader'
 import HomeNavbar from '../components/Navbar/HomeNavbar'
 import Head from 'next/head'
+import Footer from '../components/Footer/Footer'
+import ProfileBody from '../components/Profile/ProfileBody'
 
 export default function ProfilePage() {
   return (
@@ -24,6 +26,8 @@ export default function ProfilePage() {
       <PrivateRoute>
         <HomeNavbar />
         <ProfileHeader />
+        <ProfileBody />
+        <Footer />
       </PrivateRoute>
     </>
   )
