@@ -21,7 +21,7 @@ export default function UploadPhoto() {
 
   useEffect(async () => {
     try {
-      const user = await axiosAPI.user.getUserInfo()
+      const user = await axiosAPI.user.getMyUserInfo()
       const avatar = user.data.avatar
         ? await axiosAPI.user.getUserAvatar(user.data._id)
         : '/images/avatar.png'
@@ -52,8 +52,8 @@ export default function UploadPhoto() {
     setLoading(true)
     const formData = new FormData()
     formData.append('avatar', newImage)
-    const user = await axiosAPI.user.getUserInfo()
-    await axiosAPI.user.uploadUserAvatar(formData)
+    const user = await axiosAPI.user.getMyUserInfo()
+    await axiosAPI.user.uploadMyUserAvatar(formData)
     const uploadedImage = await axiosAPI.user.getUserAvatar(user.data._id)
   	setNewImageURL(uploadedImage)
     setNewImageAdded(false)
