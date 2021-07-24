@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import axiosAPI from '../../api/axiosAPI'
-import ProfileCardCompound from '../ProfileCard/ProfileCardCompound'
+import ProfileCardCompound from '../../components/ProfileCard/ProfileCardCompound'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { MainContext } from '../../context/MainContext'
 
