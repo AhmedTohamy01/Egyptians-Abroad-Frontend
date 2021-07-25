@@ -12,18 +12,20 @@ export default function ProfileHeader() {
   const [avatarLink, setAvatarLink] = useState(null)
   const [limit, setLimit] = useState(2)
   const [skip, setSkip] = useState(0)
-  
+  const [loading, setLoading] = useState(true)
+
   useEffect(async () => {	
     try {
       const user = await axiosAPI.user.getMyUserInfo()
       const userNewPosts = await axiosAPI.post.getMyUserPosts(limit, skip)
       const avatar = user.data.avatar
-        ? await axiosAPI.user.getUserAvatar(user.data._id)
+        ? axiosAPI.user.getUserAvatar(user.data._id)
         : null
       setUserData(user)
 			console.log('newUserPosts', userNewPosts.data)
 			setUserPosts(userPosts.concat(userNewPosts.data))
       setAvatarLink(avatar)
+			setLoading(false)
     } catch (e) {
       setError(e)
     }
@@ -33,6 +35,11 @@ export default function ProfileHeader() {
     setSkip(skip + 2)
   }
 
+	
+  if (loading) {
+    return <>loading ...</>
+  }
+	
   return (
     <ProfileBodyWrapper>
       <PostsTitle>My Posts</PostsTitle>
