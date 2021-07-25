@@ -58,6 +58,15 @@ export default {
         `/posts?limit=${limit}&skip=${skip}&sortBy=createdAt:desc`
       )
     },
+    getOnePost(postId) {
+      return apiClient.get(`/posts/${postId}`)
+    },
   },
-  comment: {},
+  comment: {
+    getPostComments(postId, limit, skip) {
+      return apiClient.get(
+        `/comments?postId=${postId}&limit=${limit}&skip=${skip}&sortBy=createdAt:asc`
+      )
+    },
+  },
 }
