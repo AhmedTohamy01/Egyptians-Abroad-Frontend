@@ -96,7 +96,7 @@ export const LogoIcon = styled.p`
   color: #1399ff;
 
   @media (max-width: 550px) {
-    font-size: 20px;
+    font-size: 25px;
   }
 `
 
