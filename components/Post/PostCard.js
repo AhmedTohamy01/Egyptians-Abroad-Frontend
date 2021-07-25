@@ -19,11 +19,8 @@ export default function PostCard({ src, title, body, postId }) {
   )
 }
 
-export const BodyTextWrapper = styled.div`
-  /* border: 1px solid yellow; */
-  display: flex;
-  margin-top: 20px;
-`
+
+
 
 /*---> Styles <---*/
 
@@ -85,4 +82,10 @@ export const TitleTextWrapper = styled.div`
   @media (max-width: 500px) {
     font-size: 15px;
   }
+`
+
+export const BodyTextWrapper = styled.div`
+  /* border: 1px solid yellow; */
+  display: flex;
+  margin-top: 20px;
 `
