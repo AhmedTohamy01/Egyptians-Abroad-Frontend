@@ -54,6 +54,7 @@ export default function HomeBody() {
           <GenericCard
             key={item._id}
             ownerId={item.owner}
+						postId={item._id}
             title={item.title}
             src={
               isValidImage(item.avatarLink)
