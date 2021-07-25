@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import Link from 'next/link'
 
 /*---> Component <---*/
-export default function GenericCard({ src, title }) {
+export default function GenericCard({ src, title, postId }) {
   return (
-    <>
+    <Link href={`/posts/${postId}`}>
       <GenericWrapper>
         <GenericImageWrapper>
           <GenericImage src={src} />
@@ -13,9 +14,10 @@ export default function GenericCard({ src, title }) {
           <GenericTitle>{title}</GenericTitle>
         </GenericTextWrapper>
       </GenericWrapper>
-    </>
+    </Link>
   )
 }
+
 
 /*---> Styles <---*/
 
