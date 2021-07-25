@@ -5,6 +5,7 @@ import PrivateRoute from '../custom-routes/PrivateRoute'
 import ProfileHeader from '../components/Profile/ProfileHeader'
 import HomeBody from '../components/Home/HomeBody'
 import Footer from '../components/Footer/Footer'
+import AddButton from '../components/Home/AddButton'
 
 export default function HomePage() {
   return (
@@ -27,6 +28,7 @@ export default function HomePage() {
       <HomeNavbar />
 			<ProfileHeader />
 			<HomeBody />
+			<AddButton />
 			<Footer />
     </PrivateRoute>
   )
