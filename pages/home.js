@@ -2,6 +2,9 @@ import Head from 'next/head'
 import React from 'react'
 import HomeNavbar from '../components/Navbar/HomeNavbar'
 import PrivateRoute from '../custom-routes/PrivateRoute'
+import ProfileHeader from '../components/Profile/ProfileHeader'
+import HomeBody from '../components/Home/HomeBody'
+import Footer from '../components/Footer/Footer'
 
 export default function HomePage() {
   return (
@@ -22,6 +25,9 @@ export default function HomePage() {
         />
       </Head>
       <HomeNavbar />
+			<ProfileHeader />
+			<HomeBody />
+			<Footer />
     </PrivateRoute>
   )
 }
