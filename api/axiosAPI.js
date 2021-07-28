@@ -48,9 +48,9 @@ export default {
     },
   },
   post: {
-		addNewPost(payload) {
-			return apiClient.post('/posts/new', payload)
-		},
+    addNewPost(payload) {
+      return apiClient.post('/posts/new', payload)
+    },
     getMyUserPosts(limit, skip) {
       return apiClient.get(
         `/posts/me?limit=${limit}&skip=${skip}&sortBy=createdAt:desc`
@@ -66,6 +66,9 @@ export default {
     },
   },
   comment: {
+    addNewComment(postId, payload) {
+      return apiClient.post(`/comments/${postId}/new`, payload)
+    },
     getPostComments(postId, limit, skip) {
       return apiClient.get(
         `/comments?postId=${postId}&limit=${limit}&skip=${skip}&sortBy=createdAt:asc`
