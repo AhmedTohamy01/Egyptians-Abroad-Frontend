@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 
 /*---> Component <---*/
-export default function AddButton() {
+export default function AddButton({ButtonLink}) {
   const { showProfileCard, setShowProfileCard } = useContext(MainContext)
 
   function handleClick() {
@@ -12,7 +12,7 @@ export default function AddButton() {
   }
 
   return (
-    <Link href='/new-post'>
+    <Link href={ButtonLink}>
       <PlusWrapper onClick={handleClick}>
         <PlusImage src='/images/open.svg' alt='Plus Icon' />
       </PlusWrapper>
