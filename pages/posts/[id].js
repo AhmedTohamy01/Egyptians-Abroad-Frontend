@@ -6,6 +6,7 @@ import CommentsCard from '../../components/Post/CommentsCard'
 import Head from 'next/head'
 import HomeNavbar from '../../components/Navbar/HomeNavbar'
 import Footer from '../../components/Footer/Footer'
+import AddButton from '../../components/Home/AddButton' 
 
 export default function PostPage() {
   const [postData, setPostData] = useState(null)
@@ -64,6 +65,7 @@ export default function PostPage() {
         />
         <CommentsCard comments={commentsData.data} />
       </PostPageWrapper>
+      <AddButton ButtonLink={`/comments/${postData.data._id}/new`} />
       <Footer />
     </>
   )
@@ -71,14 +73,14 @@ export default function PostPage() {
 
 /*---> Styles <---*/
 export const PostPageWrapper = styled.div`
-  /* border: solid red; */
-  max-width: 460px;
+  /* border: 1px solid red; */
+  /* max-width: 460px; */
   margin: auto;
   display: flex;
   align-items: center;
   flex-direction: column;
   margin-top: 20px;
-  min-height: calc((100vh) * 0.25);
+  min-height: calc((100vh) * 0.72);
 `
 
 export const PostsWrapper = styled.div`
