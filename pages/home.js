@@ -26,10 +26,10 @@ export default function HomePage() {
         />
       </Head>
       <HomeNavbar />
-			<ProfileHeader />
-			<HomeBody />
-			<AddButton />
-			<Footer />
+      <ProfileHeader />
+      <HomeBody />
+      <AddButton ButtonLink='/new-post' />
+      <Footer />
     </PrivateRoute>
   )
 }
