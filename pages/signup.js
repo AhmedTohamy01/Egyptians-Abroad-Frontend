@@ -72,7 +72,7 @@ export default function SignupPage() {
         setName('')
         setEmail('')
         setPassword('')
-        window.location.replace('/home')
+        window.location.replace('/profile-update')
       } catch (e) {
         setError(e.message)
         setShowErrorMessage(true)

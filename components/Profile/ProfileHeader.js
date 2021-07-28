@@ -10,7 +10,7 @@ export default function ProfileHeader() {
 
   useEffect(async () => {
     try {
-      const user = await axiosAPI.user.getUserInfo()
+      const user = await axiosAPI.user.getMyUserInfo()
       const avatar = user.data.avatar
         ? await axiosAPI.user.getUserAvatar(user.data._id)
         : null

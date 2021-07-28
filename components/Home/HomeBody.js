@@ -5,50 +5,62 @@ import GenericCard from '../Post/GenericCard'
 import Button from '@material-ui/core/Button'
 
 /*---> Component <---*/
-export default function ProfileHeader() {
+export default function HomeBody() {
   const [error, setError] = useState(null)
-  const [userData, setUserData] = useState(null)
-  const [userPosts, setUserPosts] = useState([])
-  const [avatarLink, setAvatarLink] = useState(null)
-  const [limit, setLimit] = useState(2)
+  const [allPosts, setAllPosts] = useState([])
+  const [limit, setLimit] = useState(20)
   const [skip, setSkip] = useState(0)
   const [loading, setLoading] = useState(true)
 
-  useEffect(async () => {	
+  useEffect(async () => {
     try {
-      const user = await axiosAPI.user.getMyUserInfo()
-      const userNewPosts = await axiosAPI.post.getMyUserPosts(limit, skip)
-      const avatar = user.data.avatar
-        ? axiosAPI.user.getUserAvatar(user.data._id)
-        : null
-      setUserData(user)
-			console.log('newUserPosts', userNewPosts.data)
-			setUserPosts(userPosts.concat(userNewPosts.data))
-      setAvatarLink(avatar)
-			setLoading(false)
+      const allNewPosts = await axiosAPI.post.getAllPosts(limit, skip)
+      const arr = allPosts.concat(allNewPosts.data)
+
+      arr.forEach((item) => {
+        const avatar = axiosAPI.user.getUserAvatar(item.owner)
+        item.avatarLink = avatar
+      })
+      setAllPosts(arr)
+      setLoading(false)
     } catch (e) {
       setError(e)
     }
   }, [limit, skip])
 
   function handleShowMore() {
-    setSkip(skip + 2)
+    setSkip(skip + 5)
   }
 
-	
+  function isValidImage(url) {
+    let image = new Image()
+    image.src = url
+    if (image.width > 0 || image.height > 0) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   if (loading) {
     return <>loading ...</>
   }
-	
+
   return (
     <ProfileBodyWrapper>
-      <PostsTitle>My Posts</PostsTitle>
+      <PostsTitle>All Posts</PostsTitle>
       <PostsWrapper>
-        {userPosts?.map((item) => (
+        {allPosts.map((item) => (
           <GenericCard
             key={item._id}
-            src={avatarLink || '/images/avatar.png'}
+            ownerId={item.owner}
+						postId={item._id}
             title={item.title}
+            src={
+              isValidImage(item.avatarLink)
+                ? item.avatarLink
+                : '/images/avatar.png'
+            }
           />
         ))}
       </PostsWrapper>

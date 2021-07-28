@@ -24,7 +24,7 @@ export default function HomeNavbar() {
 
   useEffect(async () => {
     try {
-      const user = await axiosAPI.user.getUserInfo()
+      const user = await axiosAPI.user.getMyUserInfo()
       const avatar = user.data.avatar
         ? await axiosAPI.user.getUserAvatar(user.data._id)
         : null
@@ -96,7 +96,7 @@ export const LogoIcon = styled.p`
   color: #1399ff;
 
   @media (max-width: 550px) {
-    font-size: 20px;
+    font-size: 25px;
   }
 `
 

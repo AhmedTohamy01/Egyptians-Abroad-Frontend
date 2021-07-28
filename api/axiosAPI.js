@@ -28,18 +28,16 @@ export default {
     login(payload) {
       return apiClient.post('/users/login', payload)
     },
-    getUserInfo() {
+    getMyUserInfo() {
       return apiClient.get('/users/me')
     },
-    getUserPosts(limit, skip) {
-      return apiClient.get(
-        `/posts/me?limit=${limit}&skip=${skip}&sortBy=createdAt:desc`
-      )
+    getOtherUserInfo(userId) {
+      return apiClient.get(`/users/${userId}`)
     },
-    updateUserInfo(payload) {
+    updateMyUserInfo(payload) {
       return apiClient.patch('/users/me', payload)
     },
-    uploadUserAvatar(payload) {
+    uploadMyUserAvatar(payload) {
       return apiClient.post('/users/me/avatar', payload)
     },
     getUserAvatar(userId) {
@@ -49,6 +47,32 @@ export default {
       return apiClient.post('/users/logout')
     },
   },
-  post: {},
-  comment: {},
+  post: {
+    addNewPost(payload) {
+      return apiClient.post('/posts/new', payload)
+    },
+    getMyUserPosts(limit, skip) {
+      return apiClient.get(
+        `/posts/me?limit=${limit}&skip=${skip}&sortBy=createdAt:desc`
+      )
+    },
+    getAllPosts(limit, skip) {
+      return apiClient.get(
+        `/posts?limit=${limit}&skip=${skip}&sortBy=createdAt:desc`
+      )
+    },
+    getOnePost(postId) {
+      return apiClient.get(`/posts/${postId}`)
+    },
+  },
+  comment: {
+    addNewComment(postId, payload) {
+      return apiClient.post(`/comments/${postId}/new`, payload)
+    },
+    getPostComments(postId, limit, skip) {
+      return apiClient.get(
+        `/comments?postId=${postId}&limit=${limit}&skip=${skip}&sortBy=createdAt:asc`
+      )
+    },
+  },
 }

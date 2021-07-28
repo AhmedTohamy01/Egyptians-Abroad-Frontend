@@ -29,7 +29,7 @@ export default function BasicInfo() {
 
 	useEffect(async () => {
     try {
-      const user = await axiosAPI.user.getUserInfo()
+      const user = await axiosAPI.user.getMyUserInfo()
       setUserInfo(user.data)
       setNameInputValue(user.data.name)
 			setBioInputValue(user.data.bio)
@@ -104,12 +104,12 @@ export default function BasicInfo() {
     }
   }
 
-  async function updateUserInfo(event) {
+  async function hanldeUpdate(event) {
     event.preventDefault()
     await isValidInfo()
     if (isValidInfo()) {
       try {
-        await axiosAPI.user.updateUserInfo({
+        await axiosAPI.user.updateMyUserInfo({
           name: nameInputValue,
           bio: bioInputValue,
           country: countryInputValue,
@@ -142,7 +142,7 @@ export default function BasicInfo() {
   return (
     <FixedWrapper>
       <StepWrapper>
-        <FormBase onSubmit={updateUserInfo}>
+        <FormBase onSubmit={hanldeUpdate}>
           <FieldWrapper>
             <FieldLabel>Name</FieldLabel>
             <InputWrapper>
