@@ -12,36 +12,44 @@ import router from 'next/router'
 
 /*---> Component <---*/
 export default function BasicInfo() {
-	const [userInfo, setUserInfo] = useState(null)
+	const { setShowProfileCard, userProfile } = useContext(MainContext)
+	// const [userInfo, setUserInfo] = useState(userProfile.data)
   const [charsNumber, setCharsNumber] = useState(0)
-  const [nameInputValue, setNameInputValue] = useState('')
-  const [bioInputValue, setBioInputValue] = useState('')
-  const [countryInputValue, setCountryInputValue] = useState('')
-  const [cityInputValue, setCityInputValue] = useState('')
-  const [phoneInputValue, setPhoneInputValue] = useState('')
-  const [interestedIn, setInterestedIn] = useState([])
-  const [topicsOfInterest, setTopicsOfInterest] = useState([])
+  const [nameInputValue, setNameInputValue] = useState(userProfile.data?.name)
+  const [bioInputValue, setBioInputValue] = useState(userProfile.data?.bio)
+  const [countryInputValue, setCountryInputValue] = useState(
+    userProfile.data?.country
+  )
+  const [cityInputValue, setCityInputValue] = useState(
+    userProfile.data?.city
+  )
+  const [phoneInputValue, setPhoneInputValue] = useState(userProfile.data?.phone)
+  const [interestedIn, setInterestedIn] = useState(
+    userProfile.data?.interested_in
+  )
+  const [topicsOfInterest, setTopicsOfInterest] = useState(
+    userProfile.data?.topics_of_interest
+  )
 
   const [validInfo, setValidInfo] = useState(true)
   const [error, setError] = useState('')
   const [showErrorMessage, setShowErrorMessage] = useState(false)
-  const { setShowProfileCard } = useContext(MainContext)
 
-	useEffect(async () => {
-    try {
-      const user = await axiosAPI.user.getMyUserInfo()
-      setUserInfo(user.data)
-      setNameInputValue(user.data.name)
-			setBioInputValue(user.data.bio)
-      setCountryInputValue(user.data.country)
-      setCityInputValue(user.data.city)
-			setPhoneInputValue(user.data.phone)
-			setInterestedIn(user.data.interested_in)
-			setTopicsOfInterest(user.data.topics_of_interest)
-    } catch (e) {
-      setError(e)
-    }
-  }, [])
+	// useEffect(async () => {
+  //   try {
+  //     const user = await axiosAPI.user.getMyUserInfo()
+  //     setUserInfo(user.data)
+  //     setNameInputValue(user.data.name)
+	// 		setBioInputValue(user.data.bio)
+  //     setCountryInputValue(user.data.country)
+  //     setCityInputValue(user.data.city)
+	// 		setPhoneInputValue(user.data.phone)
+	// 		setInterestedIn(user.data.interested_in)
+	// 		setTopicsOfInterest(user.data.topics_of_interest)
+  //   } catch (e) {
+  //     setError(e)
+  //   }
+  // }, [])
 
   ////////////////////////////////
 
@@ -153,7 +161,7 @@ export default function BasicInfo() {
                 name='name'
                 autoComplete='off'
                 placeholder='Name'
-                defaultValue={userInfo?.name}
+                defaultValue={userProfile.data?.name}
                 onChange={(event) => setNewName(event)}
               />
             </InputWrapper>
@@ -167,7 +175,7 @@ export default function BasicInfo() {
                 cols='40'
                 name='bio'
                 placeholder='Living for 3 years in London, graduated from Cairo University, working as a freelancer.'
-                defaultValue={userInfo?.bio}
+                defaultValue={userProfile.data?.bio}
                 onChange={(event) => setNewBio(event)}
                 onKeyDown={limitBioInput}
               />
@@ -186,7 +194,7 @@ export default function BasicInfo() {
                 name='country'
                 autoComplete='off'
                 placeholder='Country'
-                defaultValue={userInfo?.country}
+                defaultValue={userProfile.data?.country}
                 onChange={(event) => setNewCountry(event)}
               />
             </InputWrapper>
@@ -201,7 +209,7 @@ export default function BasicInfo() {
                 name='country'
                 autoComplete='off'
                 placeholder='City'
-                defaultValue={userInfo?.city}
+                defaultValue={userProfile.data?.city}
                 onChange={(event) => setNewCity(event)}
               />
             </InputWrapper>
@@ -231,7 +239,7 @@ export default function BasicInfo() {
                       color='primary'
                       onChange={(event) => setNewInterestedIn(event)}
                       checked={
-                        interestedIn.includes('social networking')
+                        interestedIn?.includes('social networking')
                           ? true
                           : false
                       }
@@ -246,7 +254,7 @@ export default function BasicInfo() {
                       color='primary'
                       onChange={(event) => setNewInterestedIn(event)}
                       checked={
-                        interestedIn.includes('professional networking')
+                        interestedIn?.includes('professional networking')
                           ? true
                           : false
                       }
@@ -261,7 +269,7 @@ export default function BasicInfo() {
                       color='primary'
                       onChange={(event) => setNewInterestedIn(event)}
                       checked={
-                        interestedIn.includes('business partnership')
+                        interestedIn?.includes('business partnership')
                           ? true
                           : false
                       }
@@ -276,7 +284,7 @@ export default function BasicInfo() {
                       color='primary'
                       onChange={(event) => setNewInterestedIn(event)}
                       checked={
-                        interestedIn.includes('looking around') ? true : false
+                        interestedIn?.includes('looking around') ? true : false
                       }
                     />
                   }
@@ -296,7 +304,7 @@ export default function BasicInfo() {
                       color='primary'
                       onChange={(event) => setNewTopicsOfInterest(event)}
                       checked={
-                        topicsOfInterest.includes(
+                        topicsOfInterest?.includes(
                           'topic business and entrepreneurship'
                         )
                           ? true
@@ -313,7 +321,7 @@ export default function BasicInfo() {
                       color='primary'
                       onChange={(event) => setNewTopicsOfInterest(event)}
                       checked={
-                        topicsOfInterest.includes('topic visas and immigration')
+                        topicsOfInterest?.includes('topic visas and immigration')
                           ? true
                           : false
                       }
@@ -328,7 +336,7 @@ export default function BasicInfo() {
                       color='primary'
                       onChange={(event) => setNewTopicsOfInterest(event)}
                       checked={
-                        topicsOfInterest.includes('topic business partnership')
+                        topicsOfInterest?.includes('topic business partnership')
                           ? true
                           : false
                       }
@@ -343,7 +351,7 @@ export default function BasicInfo() {
                       color='primary'
                       onChange={(event) => setNewTopicsOfInterest(event)}
                       checked={
-                        topicsOfInterest.includes('topic looking around')
+                        topicsOfInterest?.includes('topic looking around')
                           ? true
                           : false
                       }
@@ -358,7 +366,7 @@ export default function BasicInfo() {
                       color='primary'
                       onChange={(event) => setNewTopicsOfInterest(event)}
                       checked={
-                        topicsOfInterest.includes('topic other') ? true : false
+                        topicsOfInterest?.includes('topic other') ? true : false
                       }
                     />
                   }
