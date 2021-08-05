@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
 import AvatarEditor from 'react-avatar-editor'
@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import { LeftArrowAlt } from '@styled-icons/boxicons-regular/LeftArrowAlt'
 import axiosAPI from '../../api/axiosAPI'
+import { MainContext } from '../../context/MainContext'
 
 /*---> Component <---*/
 export default function UploadPhoto() {
@@ -16,24 +17,25 @@ export default function UploadPhoto() {
   const [editor, setEditor] = useState(null)
   const [position, setPosition] = useState({ x: 0.5, y: 0.5 })
   const [scale, setScale] = useState(1)
-  const [avatarLink, setAvatarLink] = useState(null)
+  // const [avatarLink, setAvatarLink] = useState(null)
   const [error, setError] = useState(null)
+  const { avatarLink } = useContext(MainContext)
 
-  useEffect(async () => {
-    try {
-      const user = await axiosAPI.user.getMyUserInfo()
-      const avatar = user.data.avatar
-        ? await axiosAPI.user.getUserAvatar(user.data._id)
-        : '/images/avatar.png'
-      setAvatarLink(avatar)
-    } catch (e) {
-      setError(e)
-    }
-  }, [])
+  // useEffect(async () => {
+  //   try {
+  //     const user = await axiosAPI.user.getMyUserInfo()
+  //     const avatar = user.data.avatar
+  //       ? await axiosAPI.user.getUserAvatar(user.data._id)
+  //       : '/images/avatar.png'
+  //     setAvatarLink(avatar)
+  //   } catch (e) {
+  //     setError(e)
+  //   }
+  // }, [])
 
   function handleNewImageSelect(event) {
     setNewImageAdded(true)
-		setNewImageURL(null)
+    setNewImageURL(null)
     setNewImage(event.target.files[0])
     setScale(1)
   }
@@ -55,7 +57,7 @@ export default function UploadPhoto() {
     const user = await axiosAPI.user.getMyUserInfo()
     await axiosAPI.user.uploadMyUserAvatar(formData)
     const uploadedImage = await axiosAPI.user.getUserAvatar(user.data._id)
-  	setNewImageURL(uploadedImage)
+    setNewImageURL(uploadedImage)
     setNewImageAdded(false)
     setLoading(false)
   }
