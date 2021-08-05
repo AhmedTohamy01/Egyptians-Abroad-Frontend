@@ -3,7 +3,7 @@ import axiosAPI from '../api/axiosAPI'
 
 export default function getData() {
 	const [userProfile, setUserProfile] = useState({})
-	const [avatarURL, setAvatarURL] = useState(null)
+	const [avatarLink, setAvatarLink] = useState(null)
 
   useEffect(() => {
 		async function getUserProfile() {
@@ -13,7 +13,7 @@ export default function getData() {
           ? await axiosAPI.user.getUserAvatar(user.data._id)
           : null
         setUserProfile(user)
-        setAvatarURL(avatar)
+        setAvatarLink(avatar)
       } catch (e) {
         console.error(e)
       }
@@ -21,5 +21,5 @@ export default function getData() {
     getUserProfile()
   }, [])
 
-  return { userProfile, avatarURL }
+  return { userProfile, avatarLink }
 }
