@@ -1,41 +1,25 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
-import axiosAPI from '../../api/axiosAPI'
 import ProfileCardCompound from '../../components/ProfileCard/ProfileCardCompound'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { MainContext } from '../../context/MainContext'
 
 /*---> Component <---*/
 export default function HomeNavbar() {
-  const [userData, setUserData] = useState(null)
-  const [avatarLink, setAvatarLink] = useState(null)
   const [error, setError] = useState(null)
-  const { showProfileCard, setShowProfileCard } = useContext(MainContext)
-	
+  const { showProfileCard, setShowProfileCard, userProfile, avatarLink } =
+    useContext(MainContext)
+
   function handleClickAway() {
     setShowProfileCard(false)
   }
 
   function handleProfileClick() {
     setShowProfileCard(!showProfileCard)
-    // setShowAddCard(false)
   }
 
-  useEffect(async () => {
-    try {
-      const user = await axiosAPI.user.getMyUserInfo()
-      const avatar = user.data.avatar
-        ? await axiosAPI.user.getUserAvatar(user.data._id)
-        : null
-      setUserData(user)
-			setAvatarLink(avatar)
-    } catch (e) {
-      setError(e)
-    }
-  }, [])
-
-  if (!userData) {
+  if (!userProfile.data) {
     return <>Loading .... </>
   }
 
@@ -55,7 +39,7 @@ export default function HomeNavbar() {
           <UserInfoWrapper>
             <LinksWrapper onClick={handleProfileClick}>
               <UsernameWrapper>
-                <Username>{userData?.data.name}</Username>
+                <Username>{userProfile.data?.name}</Username>
               </UsernameWrapper>
               <AvatarWrapper>
                 <Avatar
