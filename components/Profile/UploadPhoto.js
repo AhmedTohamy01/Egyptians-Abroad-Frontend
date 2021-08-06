@@ -7,35 +7,21 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import { LeftArrowAlt } from '@styled-icons/boxicons-regular/LeftArrowAlt'
 import axiosAPI from '../../api/axiosAPI'
 import { MainContext } from '../../context/MainContext'
+import Loader from 'react-loader-spinner'
 
 /*---> Component <---*/
 export default function UploadPhoto() {
   const [newImageAdded, setNewImageAdded] = useState(false)
   const [newImage, setNewImage] = useState(null)
-  const [newImageURL, setNewImageURL] = useState(null)
   const [loading, setLoading] = useState(false)
   const [editor, setEditor] = useState(null)
   const [position, setPosition] = useState({ x: 0.5, y: 0.5 })
   const [scale, setScale] = useState(1)
-  // const [avatarLink, setAvatarLink] = useState(null)
   const [error, setError] = useState(null)
   const { avatarLink } = useContext(MainContext)
 
-  // useEffect(async () => {
-  //   try {
-  //     const user = await axiosAPI.user.getMyUserInfo()
-  //     const avatar = user.data.avatar
-  //       ? await axiosAPI.user.getUserAvatar(user.data._id)
-  //       : '/images/avatar.png'
-  //     setAvatarLink(avatar)
-  //   } catch (e) {
-  //     setError(e)
-  //   }
-  // }, [])
-
   function handleNewImageSelect(event) {
     setNewImageAdded(true)
-    setNewImageURL(null)
     setNewImage(event.target.files[0])
     setScale(1)
   }
@@ -56,15 +42,22 @@ export default function UploadPhoto() {
     formData.append('avatar', newImage)
     const user = await axiosAPI.user.getMyUserInfo()
     await axiosAPI.user.uploadMyUserAvatar(formData)
-    const uploadedImage = await axiosAPI.user.getUserAvatar(user.data._id)
-    setNewImageURL(uploadedImage)
     setNewImageAdded(false)
     setLoading(false)
+    location.reload()
   }
 
   function handleCancel() {
     setNewImageAdded(false)
     setLoading(false)
+  }
+
+  if (!avatarLink) {
+    return (
+      <SpinnerWrapper>
+        <Loader type='ThreeDots' color='#1399ff' height={100} width={100} />
+      </SpinnerWrapper>
+    )
   }
 
   return (
@@ -92,28 +85,35 @@ export default function UploadPhoto() {
                 onPositionChange={handlePositionChange}
               />
             ) : (
-              <Image src={newImageURL || avatarLink} alt='avatar big' />
+              <Image src={avatarLink} alt='avatar big' />
             )}
           </ImageWrapper>
 
-          <UploadButtonWrapper newImageAdded={newImageAdded} loading={loading}>
-            <UploadInput
-              id='upload-photo'
-              type='file'
-              accept='image/*'
-              onChange={(event) => handleNewImageSelect(event)}
-            />
-            <UploadLabel htmlFor='upload-photo'>
-              <CameraButton
-                color='primary'
-                aria-label='upload picture'
-                component='span'
-                size='medium'
-              >
-                <CameraIcon />
-              </CameraButton>
-            </UploadLabel>
-          </UploadButtonWrapper>
+          {!avatarLink ? (
+            <>Loading...</>
+          ) : (
+            <UploadButtonWrapper
+              newImageAdded={newImageAdded}
+              loading={loading}
+            >
+              <UploadInput
+                id='upload-photo'
+                type='file'
+                accept='image/*'
+                onChange={(event) => handleNewImageSelect(event)}
+              />
+              <UploadLabel htmlFor='upload-photo'>
+                <CameraButton
+                  color='primary'
+                  aria-label='upload picture'
+                  component='span'
+                  size='medium'
+                >
+                  <CameraIcon />
+                </CameraButton>
+              </UploadLabel>
+            </UploadButtonWrapper>
+          )}
 
           <Spinner loading={loading} src='/images/spinner.gif' />
 
@@ -333,4 +333,13 @@ export const ZoomBar = styled.input`
   /* border: 1px solid yellow; */
   cursor: grab;
   width: 200px;
+`
+
+export const SpinnerWrapper = styled.div`
+  /* border: 1px solid red; */
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
