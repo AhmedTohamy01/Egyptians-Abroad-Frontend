@@ -223,7 +223,7 @@ export default function BasicInfo() {
                 name='phone'
                 autoComplete='off'
                 placeholder='Phone'
-                defaultValue={userInfo?.phone}
+                defaultValue={userProfile.data?.phone}
                 onChange={(event) => setNewPhone(event)}
               />
             </InputWrapper>
@@ -321,7 +321,9 @@ export default function BasicInfo() {
                       color='primary'
                       onChange={(event) => setNewTopicsOfInterest(event)}
                       checked={
-                        topicsOfInterest?.includes('topic visas and immigration')
+                        topicsOfInterest?.includes(
+                          'topic visas and immigration'
+                        )
                           ? true
                           : false
                       }
