@@ -8,48 +8,39 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormGroup from '@material-ui/core/FormGroup'
 import Switch from '@material-ui/core/Switch'
 import axiosAPI from '../../api/axiosAPI'
-import router from 'next/router'
+import Loader from 'react-loader-spinner'
+import Link from 'next/link'
 
 /*---> Component <---*/
 export default function BasicInfo() {
-	const { setShowProfileCard, userProfile } = useContext(MainContext)
-	// const [userInfo, setUserInfo] = useState(userProfile.data)
+  const { setShowProfileCard, userProfile } = useContext(MainContext)
   const [charsNumber, setCharsNumber] = useState(0)
-  const [nameInputValue, setNameInputValue] = useState(userProfile.data?.name)
-  const [bioInputValue, setBioInputValue] = useState(userProfile.data?.bio)
-  const [countryInputValue, setCountryInputValue] = useState(
-    userProfile.data?.country
-  )
-  const [cityInputValue, setCityInputValue] = useState(
-    userProfile.data?.city
-  )
-  const [phoneInputValue, setPhoneInputValue] = useState(userProfile.data?.phone)
-  const [interestedIn, setInterestedIn] = useState(
-    userProfile.data?.interested_in
-  )
-  const [topicsOfInterest, setTopicsOfInterest] = useState(
-    userProfile.data?.topics_of_interest
-  )
+  const [nameInputValue, setNameInputValue] = useState('')
+  const [bioInputValue, setBioInputValue] = useState('')
+  const [countryInputValue, setCountryInputValue] = useState('')
+  const [cityInputValue, setCityInputValue] = useState('')
+  const [phoneInputValue, setPhoneInputValue] = useState('')
+  const [interestedIn, setInterestedIn] = useState('')
+  const [topicsOfInterest, setTopicsOfInterest] = useState('')
 
   const [validInfo, setValidInfo] = useState(true)
   const [error, setError] = useState('')
   const [showErrorMessage, setShowErrorMessage] = useState(false)
 
-	// useEffect(async () => {
-  //   try {
-  //     const user = await axiosAPI.user.getMyUserInfo()
-  //     setUserInfo(user.data)
-  //     setNameInputValue(user.data.name)
-	// 		setBioInputValue(user.data.bio)
-  //     setCountryInputValue(user.data.country)
-  //     setCityInputValue(user.data.city)
-	// 		setPhoneInputValue(user.data.phone)
-	// 		setInterestedIn(user.data.interested_in)
-	// 		setTopicsOfInterest(user.data.topics_of_interest)
-  //   } catch (e) {
-  //     setError(e)
-  //   }
-  // }, [])
+  useEffect(async () => {
+    try {
+      const user = await axiosAPI.user.getMyUserInfo()
+      setNameInputValue(user.data.name)
+      setBioInputValue(user.data.bio)
+      setCountryInputValue(user.data.country)
+      setCityInputValue(user.data.city)
+      setPhoneInputValue(user.data.phone)
+      setInterestedIn(user.data.interested_in)
+      setTopicsOfInterest(user.data.topics_of_interest)
+    } catch (e) {
+      console.error(e)
+    }
+  }, [])
 
   ////////////////////////////////
 
@@ -99,9 +90,9 @@ export default function BasicInfo() {
 
   function isValidInfo() {
     if (
-      countryInputValue.length > 0 &&
-      cityInputValue.length > 0 &&
-      nameInputValue.length > 0
+      countryInputValue?.length > 0 &&
+      cityInputValue?.length > 0 &&
+      nameInputValue?.length > 0
     ) {
       setValidInfo(true)
       return true
@@ -114,7 +105,7 @@ export default function BasicInfo() {
 
   async function hanldeUpdate(event) {
     event.preventDefault()
-    await isValidInfo()
+    isValidInfo()
     if (isValidInfo()) {
       try {
         await axiosAPI.user.updateMyUserInfo({
@@ -127,10 +118,10 @@ export default function BasicInfo() {
           topics_of_interest: topicsOfInterest,
         })
         console.log('user updated sucessfully!')
-        router.replace('/home')
+        location.replace('/home')
         setShowProfileCard(false)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     }
   }
@@ -145,6 +136,14 @@ export default function BasicInfo() {
 
   function handleCloseAlert() {
     setShowErrorMessage(false)
+  }
+
+  if (!topicsOfInterest) {
+    return (
+      <SpinnerWrapper>
+        <Loader type='ThreeDots' color='#1399ff' height={100} width={100} />
+      </SpinnerWrapper>
+    )
   }
 
   return (
@@ -383,6 +382,11 @@ export default function BasicInfo() {
               Update Profile
             </NextButton>
           </NextButtonWrapper>
+          <CancelButtonWrapper>
+            <Link href='/home' passHref>
+              <CancelButton variant='contained'>Cancel</CancelButton>
+            </Link>
+          </CancelButtonWrapper>
         </FormBase>
       </StepWrapper>
       <Snackbar
@@ -587,7 +591,29 @@ export const NextButton = styled(Button)`
   text-transform: capitalize !important;
   color: white !important;
   font-size: 16px !important;
-  margin-bottom: 100px !important;
+`
+
+export const CancelButtonWrapper = styled.div`
+  /* border: 1px solid yellow; */
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 30px;
+`
+
+export const CancelButton = styled(Button)`
+  background: #f0f0f0 !important;
+  width: 100% !important;
+  height: 40px !important;
+  padding: 0 12px !important;
+  border-radius: 10px !important;
+  text-transform: capitalize !important;
+  color: #5a5a5a !important;
+  font-size: 16px !important;
+  font-stretch: normal !important;
+  font-style: normal !important;
+  line-height: normal !important;
+  letter-spacing: normal !important;
+  margin-bottom: 70px !important;
 `
 
 export const ErrorMessage = styled(SnackbarContent)`
@@ -600,4 +626,13 @@ export const ErrorMessage = styled(SnackbarContent)`
   @media (max-width: 480px) {
     width: 90% !important;
   }
+`
+
+export const SpinnerWrapper = styled.div`
+  /* border: 1px solid red; */
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
