@@ -8,10 +8,10 @@ export default function ProfileHeader({ userProfile, avatarLink }) {
       <AvatarWrapper>
         <AvatarImage src={avatarLink || 'images/avatar.png'} alt='avatar big' />
       </AvatarWrapper>
-      <ProfileName>{userProfile.data?.name}</ProfileName>
-      <ProfileBio>{userProfile.data?.bio}</ProfileBio>
+      <ProfileName>{userProfile?.data.name}</ProfileName>
+      <ProfileBio>{userProfile?.data.bio}</ProfileBio>
       <CountryCity>
-        {userProfile.data?.city}, {userProfile.data?.country}
+        {userProfile?.data.city}, {userProfile?.data.country}
       </CountryCity>
     </ProfileHeaderWrapper>
   )

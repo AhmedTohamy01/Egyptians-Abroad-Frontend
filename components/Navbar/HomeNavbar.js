@@ -29,7 +29,7 @@ export default function HomeNavbar({ userProfile, avatarLink }) {
           <UserInfoWrapper>
             <LinksWrapper onClick={handleProfileClick}>
               <UsernameWrapper>
-                <Username>{userProfile.data.name}</Username>
+                <Username>{userProfile?.data.name}</Username>
               </UsernameWrapper>
               <AvatarWrapper>
                 <Avatar
