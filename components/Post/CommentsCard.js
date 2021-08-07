@@ -1,6 +1,4 @@
-import React from 'react'
 import styled from 'styled-components'
-import Link from 'next/link'
 
 /*---> Component <---*/
 export default function CommentsCard({ comments }) {
@@ -10,7 +8,7 @@ export default function CommentsCard({ comments }) {
       {comments.map((item, index) => (
         <CommentWrapper key={index}>
           <ImageWrapper>
-            <GenericImage src='/images/avatar.png' />
+            <GenericImage src={item.avatarLink || '/images/avatar.png'} />
           </ImageWrapper>
           <CommentTextWrapper>{item.body}</CommentTextWrapper>
         </CommentWrapper>
@@ -18,7 +16,6 @@ export default function CommentsCard({ comments }) {
     </CommentsCardWrapper>
   )
 }
-
 
 /*---> Styles <---*/
 
@@ -90,4 +87,3 @@ export const CommentTextWrapper = styled.div`
     font-size: 15px;
   }
 `
-
