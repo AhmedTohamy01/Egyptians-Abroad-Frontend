@@ -1,30 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import ProfileCardCompound from '../../components/ProfileCard/ProfileCardCompound'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import { MainContext } from '../../context/MainContext'
 
 /*---> Component <---*/
-export default function HomeNavbar() {
-  const [error, setError] = useState(null)
-  const { showProfileCard, setShowProfileCard, userProfile, avatarLink } =
-    useContext(MainContext)
-
+export default function HomeNavbar({ userProfile, avatarLink }) {
   function handleClickAway() {
     setShowProfileCard(false)
   }
 
   function handleProfileClick() {
     setShowProfileCard(!showProfileCard)
-  }
-
-  if (!userProfile.data) {
-    return <>Loading .... </>
-  }
-
-  if (error) {
-    return <>Something went wrong, please try again later ... </>
   }
 
   return (
@@ -39,7 +25,7 @@ export default function HomeNavbar() {
           <UserInfoWrapper>
             <LinksWrapper onClick={handleProfileClick}>
               <UsernameWrapper>
-                <Username>{userProfile.data?.name}</Username>
+                <Username>{userProfile.data.name}</Username>
               </UsernameWrapper>
               <AvatarWrapper>
                 <Avatar
