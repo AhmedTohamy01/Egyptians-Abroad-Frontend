@@ -42,9 +42,11 @@ export default function UploadPhoto() {
     formData.append('avatar', newImage)
     const user = await axiosAPI.user.getMyUserInfo()
     await axiosAPI.user.uploadMyUserAvatar(formData)
-    setNewImageAdded(false)
-    setLoading(false)
     location.reload()
+		setTimeout(() => {
+			setNewImageAdded(false)
+			setLoading(false)
+		},1000)
   }
 
   function handleCancel() {
