@@ -1,10 +1,14 @@
+import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import ProfileCardCompound from '../../components/ProfileCard/ProfileCardCompound'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import { MainContext } from '../../context/MainContext'
 
 /*---> Component <---*/
 export default function HomeNavbar({ userProfile, avatarLink }) {
+  const { showProfileCard, setShowProfileCard } = useContext(MainContext)
+
   function handleClickAway() {
     setShowProfileCard(false)
   }
