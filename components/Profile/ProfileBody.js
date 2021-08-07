@@ -3,43 +3,54 @@ import styled from 'styled-components'
 import axiosAPI from '../../api/axiosAPI'
 import GenericCard from '../Post/GenericCard'
 import Button from '@material-ui/core/Button'
+import Loader from 'react-loader-spinner'
+import Link from 'next/link'
 
 /*---> Component <---*/
-export default function ProfileHeader() {
-  const [error, setError] = useState(null)
-  const [userData, setUserData] = useState(null)
+export default function ProfileBody({ avatarLink }) {
   const [userPosts, setUserPosts] = useState([])
-  const [avatarLink, setAvatarLink] = useState(null)
+  const [userPostsCount, setUserPostsCount] = useState(0)
   const [limit, setLimit] = useState(2)
   const [skip, setSkip] = useState(0)
   const [loading, setLoading] = useState(true)
 
-  useEffect(async () => {	
+  useEffect(async () => {
     try {
-      const user = await axiosAPI.user.getMyUserInfo()
+			setLoading(true)
       const userNewPosts = await axiosAPI.post.getMyUserPosts(limit, skip)
-      const avatar = user.data.avatar
-        ? axiosAPI.user.getUserAvatar(user.data._id)
-        : null
-      setUserData(user)
-			console.log('newUserPosts', userNewPosts.data)
-			setUserPosts(userPosts.concat(userNewPosts.data))
-      setAvatarLink(avatar)
-			setLoading(false)
+      const AllPosts = await axiosAPI.post.getMyUserPosts()
+      setUserPosts(userPosts.concat(userNewPosts.data))
+      setUserPostsCount(AllPosts.data.length)
+      setLoading(false)
     } catch (e) {
       setError(e)
     }
   }, [limit, skip])
 
-  function handleShowMore() {
+  async function handleShowMore() {
     setSkip(skip + 2)
   }
 
-	
   if (loading) {
-    return <>loading ...</>
+    return (
+      <SpinnerWrapper>
+        <Loader type='ThreeDots' color='#1399ff' height={100} width={100} />
+      </SpinnerWrapper>
+    )
   }
-	
+
+  if (userPostsCount === 0) {
+    return (
+      <ProfileBodyWrapper>
+        <PostsTitle>My Posts</PostsTitle>
+        <NoPostsWrapper>You don't have any posts yet !</NoPostsWrapper>
+        <Link href='/home' passHref>
+          <HomeButton variant='contained'>Back to Home</HomeButton>
+        </Link>
+      </ProfileBodyWrapper>
+    )
+  }
+
   return (
     <ProfileBodyWrapper>
       <PostsTitle>My Posts</PostsTitle>
@@ -52,7 +63,14 @@ export default function ProfileHeader() {
           />
         ))}
       </PostsWrapper>
-      <ShowMoreButton onClick={handleShowMore}>Show More</ShowMoreButton>
+      {userPosts.length < userPostsCount ? (
+        <ShowMoreButton onClick={handleShowMore} variant='contained'>
+          Show More
+        </ShowMoreButton>
+      ) : null}
+      <Link href='/home' passHref>
+        <HomeButton variant='contained'>Back to Home</HomeButton>
+      </Link>
     </ProfileBodyWrapper>
   )
 }
@@ -87,11 +105,40 @@ export const PostsTitle = styled.div`
 
 export const ShowMoreButton = styled(Button)`
   background: linear-gradient(to bottom, #2bc9ff, #1399ff 100%) !important;
-  width: 125px !important;
-  height: 36px !important;
+  width: 100% !important;
+  height: 40px !important;
   padding: 0 12px !important;
   border-radius: 8px !important;
   text-transform: initial !important;
   color: white !important;
   font-size: 16px !important;
+`
+
+export const HomeButton = styled(Button)`
+  background: #f0f0f0 !important;
+  width: 100% !important;
+  height: 40px !important;
+  padding: 0 12px !important;
+  border-radius: 10px !important;
+  text-transform: capitalize !important;
+  color: #5a5a5a !important;
+  font-size: 16px !important;
+  margin-bottom: 70px !important;
+  margin-top: 30px !important;
+`
+
+export const SpinnerWrapper = styled.div`
+  /* border: 1px solid red; */
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+export const NoPostsWrapper = styled.div`
+  /* border: 1px solid green; */
+  font-size: 18px;
+  margin-top: 20px;
 `
