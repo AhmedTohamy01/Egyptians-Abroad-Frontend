@@ -55,9 +55,9 @@ export default function ProfileBody({ avatarLink }) {
     <ProfileBodyWrapper>
       <PostsTitle>My Posts</PostsTitle>
       <PostsWrapper>
-        {userPosts?.map((item) => (
+        {userPosts?.map((item, index) => (
           <GenericCard
-            key={item._id}
+            key={index}
             src={avatarLink || '/images/avatar.png'}
             title={item.title}
           />

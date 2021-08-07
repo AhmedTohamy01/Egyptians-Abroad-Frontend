@@ -55,9 +55,9 @@ export default function HomeBody() {
     <ProfileBodyWrapper>
       <PostsTitle>All Posts</PostsTitle>
       <PostsWrapper>
-        {allPosts.map((item) => (
+        {allPosts.map((item, index) => (
           <GenericCard
-            key={item._id}
+            key={index}
             ownerId={item.owner}
             postId={item._id}
             title={item.title}

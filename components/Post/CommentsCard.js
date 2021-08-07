@@ -7,8 +7,8 @@ export default function CommentsCard({ comments }) {
   return (
     <CommentsCardWrapper>
       <CommentsTitle>Comments</CommentsTitle>
-      {comments.map((item) => (
-        <CommentWrapper key={item._id}>
+      {comments.map((item, index) => (
+        <CommentWrapper key={index}>
           <ImageWrapper>
             <GenericImage src='/images/avatar.png' />
           </ImageWrapper>
