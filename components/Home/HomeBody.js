@@ -19,7 +19,9 @@ export default function HomeBody() {
       const arr = allPosts.concat(allNewPosts.data)
 
       arr.forEach((item) => {
-        const avatar = axiosAPI.user.getUserAvatar(item.owner)
+        const avatar = user.data.avatar
+          ? axiosAPI.user.getUserAvatar(user.data._id)
+          : null
         item.avatarLink = avatar
       })
       setAllPosts(arr)
@@ -31,16 +33,6 @@ export default function HomeBody() {
 
   function handleShowMore() {
     setSkip(skip + 5)
-  }
-
-  function isValidImage(url) {
-    let image = new Image()
-    image.src = url
-    if (image.width > 0 || image.height > 0) {
-      return true
-    } else {
-      return false
-    }
   }
 
   if (allPosts.length === 0) {
@@ -61,11 +53,7 @@ export default function HomeBody() {
             ownerId={item.owner}
             postId={item._id}
             title={item.title}
-            src={
-              isValidImage(item.avatarLink)
-                ? item.avatarLink
-                : '/images/avatar.png'
-            }
+            src={item.avatarLink || '/images/avatar.png'}
           />
         ))}
       </PostsWrapper>
