@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import axiosAPI from '../../api/axiosAPI'
 import GenericCard from '../Post/GenericCard'
 import Button from '@material-ui/core/Button'
+import Loader from 'react-loader-spinner'
 
 /*---> Component <---*/
 export default function HomeBody() {
@@ -42,8 +43,12 @@ export default function HomeBody() {
     }
   }
 
-  if (loading) {
-    return <>loading ...</>
+  if (allPosts.length === 0) {
+    return (
+      <SpinnerWrapper>
+        <Loader type='ThreeDots' color='#1399ff' height={100} width={100} />
+      </SpinnerWrapper>
+    )
   }
 
   return (
@@ -54,7 +59,7 @@ export default function HomeBody() {
           <GenericCard
             key={item._id}
             ownerId={item.owner}
-						postId={item._id}
+            postId={item._id}
             title={item.title}
             src={
               isValidImage(item.avatarLink)
@@ -106,4 +111,14 @@ export const ShowMoreButton = styled(Button)`
   text-transform: initial !important;
   color: white !important;
   font-size: 16px !important;
+`
+
+export const SpinnerWrapper = styled.div`
+  /* border: 1px solid red; */
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
