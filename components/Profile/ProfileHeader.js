@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { MainContext } from '../../context/MainContext'
 
 /*---> Component <---*/
-export default function ProfileHeader() {
-  const { userProfile, avatarLink } = useContext(MainContext)
+export default function ProfileHeader({ userProfile, avatarLink }) {
 
   return (
     <ProfileHeaderWrapper>
