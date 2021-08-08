@@ -4,11 +4,8 @@ import PostCard from '../../components/Post/PostCard'
 import styled from 'styled-components'
 import CommentsCard from '../../components/Post/CommentsCard'
 import Head from 'next/head'
-import HomeNavbar from '../../components/Navbar/HomeNavbar'
-import Footer from '../../components/Footer/Footer'
 import AddButton from '../../components/Home/AddButton' 
 import Loader from 'react-loader-spinner'
-// import { MainContext } from '../../context/MainContext'
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
 
@@ -19,7 +16,6 @@ export default function PostPage() {
   const [loading, setLoading] = useState(true)
   const [limit, setLimit] = useState(20)
   const [skip, setSkip] = useState(0)
-  // const { userProfile, avatarLink } = useContext(MainContext)
 
   useEffect(async () => {
     try {
