@@ -36,9 +36,7 @@ export default function PostPage() {
         skip
       )
 			comments.data.forEach((item) => {
-        const avatar = user.data.avatar
-          ? axiosAPI.user.getUserAvatar(item.owner)
-          : null
+        const avatar = axiosAPI.user.getUserAvatar(item.owner)
         item.avatarLink = avatar
       })
       setPostData(post)
@@ -49,6 +47,17 @@ export default function PostPage() {
       console.error(e)
     }
   }, [limit, skip])
+
+
+	function isValidImage(url) {
+    let image = new Image()
+    image.src = url
+    if (image.width > 0 || image.height > 0) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   if (loading) {
     return (
@@ -75,7 +84,12 @@ export default function PostPage() {
           rel='stylesheet'
         />
       </Head>
-      <HomeNavbar userProfile={userProfile} avatarLink={avatarLink} />
+      <HomeNavbar
+        userProfile={userProfile}
+        avatarLink={
+          isValidImage(avatarLink) ? avatarLink : '/images/avatar.png'
+        }
+      />
       <PostPageWrapper>
         <PostCard
           postId={postData.data._id}
