@@ -2,13 +2,30 @@ import styled from 'styled-components'
 
 /*---> Component <---*/
 export default function CommentsCard({ comments }) {
+
+	function isValidImage(url) {
+    let image = new Image()
+    image.src = url
+    if (image.width > 0 || image.height > 0) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   return (
     <CommentsCardWrapper>
       <CommentsTitle>Comments</CommentsTitle>
       {comments.map((item, index) => (
         <CommentWrapper key={index}>
           <ImageWrapper>
-            <GenericImage src={item.avatarLink || '/images/avatar.png'} />
+            <GenericImage
+              src={
+                isValidImage(item.avatarLink)
+                  ? item.avatarLink
+                  : '/images/avatar.png'
+              }
+            />
           </ImageWrapper>
           <CommentTextWrapper>{item.body}</CommentTextWrapper>
         </CommentWrapper>
