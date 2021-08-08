@@ -6,7 +6,7 @@ export default function ProfileHeader({ userProfile, avatarLink }) {
   return (
     <ProfileHeaderWrapper>
       <AvatarWrapper>
-        <AvatarImage src={avatarLink || 'images/avatar.png'} alt='avatar big' />
+        <AvatarImage src={avatarLink || '/images/avatar.png'} alt='avatar big' />
       </AvatarWrapper>
       <ProfileName>{userProfile?.data.name}</ProfileName>
       <ProfileBio>{userProfile?.data.bio}</ProfileBio>
