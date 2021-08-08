@@ -15,6 +15,7 @@ export default function HomeBody() {
 
   useEffect(async () => {
     try {
+			setLoading(true)
       const allNewPosts = await axiosAPI.post.getAllPosts(limit, skip)
       const arr = allPosts.concat(allNewPosts.data)
 
@@ -43,7 +44,7 @@ export default function HomeBody() {
     }
   }
 
-  if (allPosts.length === 0) {
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Loader type='ThreeDots' color='#1399ff' height={100} width={100} />
