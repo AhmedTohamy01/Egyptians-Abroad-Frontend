@@ -3,13 +3,15 @@ import styled from 'styled-components'
 import Link from 'next/link'
 
 /*---> Component <---*/
-export default function GenericCard({ src, title, postId }) {
+export default function GenericCard({ src, title, postId, ownerId }) {
   return (
     <Link href={`/posts/${postId}`}>
       <GenericWrapper>
-        <GenericImageWrapper>
-          <GenericImage src={src} />
-        </GenericImageWrapper>
+        <Link href={`/public-profile/${ownerId}`}>
+          <GenericImageWrapper>
+            <GenericImage src={src} />
+          </GenericImageWrapper>
+        </Link>
         <GenericTextWrapper>
           <GenericTitle>{title}</GenericTitle>
         </GenericTextWrapper>
