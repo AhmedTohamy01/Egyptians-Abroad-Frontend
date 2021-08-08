@@ -18,7 +18,7 @@ export default function UploadPhoto() {
   const [position, setPosition] = useState({ x: 0.5, y: 0.5 })
   const [scale, setScale] = useState(1)
   const [error, setError] = useState(null)
-  const { avatarLink } = useContext(MainContext)
+  const { userProfile, avatarLink } = useContext(MainContext)
 
   function handleNewImageSelect(event) {
     setNewImageAdded(true)
@@ -43,10 +43,10 @@ export default function UploadPhoto() {
     const user = await axiosAPI.user.getMyUserInfo()
     await axiosAPI.user.uploadMyUserAvatar(formData)
     location.reload()
-		setTimeout(() => {
-			setNewImageAdded(false)
-			setLoading(false)
-		},1000)
+    setTimeout(() => {
+      setNewImageAdded(false)
+      setLoading(false)
+    }, 1000)
   }
 
   function handleCancel() {
@@ -54,7 +54,7 @@ export default function UploadPhoto() {
     setLoading(false)
   }
 
-  if (!avatarLink) {
+  if (Object.keys(userProfile).length === 0) {
     return (
       <SpinnerWrapper>
         <Loader type='ThreeDots' color='#1399ff' height={100} width={100} />
@@ -87,38 +87,28 @@ export default function UploadPhoto() {
                 onPositionChange={handlePositionChange}
               />
             ) : (
-              <Image src={avatarLink} alt='avatar big' />
+              <Image src={avatarLink || '/images/avatar.png'} alt='avatar big' />
             )}
           </ImageWrapper>
-
-          {!avatarLink ? (
-            <>Loading...</>
-          ) : (
-            <UploadButtonWrapper
-              newImageAdded={newImageAdded}
-              loading={loading}
-            >
-              <UploadInput
-                id='upload-photo'
-                type='file'
-                accept='image/*'
-                onChange={(event) => handleNewImageSelect(event)}
-              />
-              <UploadLabel htmlFor='upload-photo'>
-                <CameraButton
-                  color='primary'
-                  aria-label='upload picture'
-                  component='span'
-                  size='medium'
-                >
-                  <CameraIcon />
-                </CameraButton>
-              </UploadLabel>
-            </UploadButtonWrapper>
-          )}
-
+          <UploadButtonWrapper newImageAdded={newImageAdded} loading={loading}>
+            <UploadInput
+              id='upload-photo'
+              type='file'
+              accept='image/*'
+              onChange={(event) => handleNewImageSelect(event)}
+            />
+            <UploadLabel htmlFor='upload-photo'>
+              <CameraButton
+                color='primary'
+                aria-label='upload picture'
+                component='span'
+                size='medium'
+              >
+                <CameraIcon />
+              </CameraButton>
+            </UploadLabel>
+          </UploadButtonWrapper>
           <Spinner loading={loading} src='/images/spinner.gif' />
-
           <ZoomWrapper newImageAdded={newImageAdded} loading={loading}>
             <ZoomLabel>Zoom:</ZoomLabel>
             <ZoomBar
@@ -132,7 +122,6 @@ export default function UploadPhoto() {
               defaultValue={1}
             />
           </ZoomWrapper>
-
           <ButtonsWrapper newImageAdded={newImageAdded} loading={loading}>
             <CancelButton
               variant='contained'
