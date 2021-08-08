@@ -33,7 +33,7 @@ export default function Logout() {
         onClick={handleSignout}
       >
         <Image
-          src={`images/profile-card/logout-${iconColor}.svg`}
+          src={`/images/profile-card/logout-${iconColor}.svg`}
           alt='logout logo'
         />
         <Text>Logout</Text>

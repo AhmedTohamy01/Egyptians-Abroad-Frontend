@@ -20,7 +20,7 @@ export default function EditProfile() {
         onClick={() => setShowProfileCard(false)}
       >
         <Image
-          src={`images/profile-card/edit-profile-${iconColor}.svg`}
+          src={`/images/profile-card/edit-profile-${iconColor}.svg`}
           alt='Edit logo'
         />
         <Text>Edit Profile</Text>

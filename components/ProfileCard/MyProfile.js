@@ -20,7 +20,7 @@ export default function MyProfile() {
         onClick={() => setShowProfileCard(false)}
       >
         <Image
-          src={`images/profile-card/my-profile-${iconColor}.svg`}
+          src={`/images/profile-card/my-profile-${iconColor}.svg`}
           alt='person logo'
         />
         <Text>My Profile</Text>
