@@ -10,7 +10,7 @@ import Link from 'next/link'
 export default function ProfileBody({ avatarLink }) {
   const [userPosts, setUserPosts] = useState([])
   const [userPostsCount, setUserPostsCount] = useState(0)
-  const [limit, setLimit] = useState(2)
+  const [limit, setLimit] = useState(10)
   const [skip, setSkip] = useState(0)
   const [loading, setLoading] = useState(true)
 
@@ -28,7 +28,7 @@ export default function ProfileBody({ avatarLink }) {
   }, [limit, skip])
 
   async function handleShowMore() {
-    setSkip(skip + 2)
+    setSkip(skip + 10)
   }
 
   if (loading) {
