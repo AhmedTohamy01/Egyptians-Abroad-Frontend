@@ -3,14 +3,16 @@ import styled from 'styled-components'
 import Link from 'next/link'
 
 /*---> Component <---*/
-export default function PostCard({ src, title, body, postId }) {
+export default function PostCard({ src, title, body, postId, ownerId }) {
   return (
     <Link href={`/posts/${postId}`}>
       <PostWrapper>
         <PostTitleWrapper>
-          <ImageWrapper>
-            <GenericImage src={src} />
-          </ImageWrapper>
+          <Link href={`/public-profile/${ownerId}`}>
+            <ImageWrapper>
+              <GenericImage src={src} />
+            </ImageWrapper>
+          </Link>
           <TitleTextWrapper>{title}</TitleTextWrapper>
         </PostTitleWrapper>
         <BodyTextWrapper>{body}</BodyTextWrapper>
