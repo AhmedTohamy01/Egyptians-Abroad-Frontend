@@ -8,7 +8,7 @@ import HomeNavbar from '../../components/Navbar/HomeNavbar'
 import Footer from '../../components/Footer/Footer'
 import AddButton from '../../components/Home/AddButton' 
 import Loader from 'react-loader-spinner'
-import { MainContext } from '../../context/MainContext'
+// import { MainContext } from '../../context/MainContext'
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
 
@@ -19,7 +19,7 @@ export default function PostPage() {
   const [loading, setLoading] = useState(true)
   const [limit, setLimit] = useState(20)
   const [skip, setSkip] = useState(0)
-  const { userProfile, avatarLink } = useContext(MainContext)
+  // const { userProfile, avatarLink } = useContext(MainContext)
 
   useEffect(async () => {
     try {
@@ -84,12 +84,6 @@ export default function PostPage() {
           rel='stylesheet'
         />
       </Head>
-      <HomeNavbar
-        userProfile={userProfile}
-        avatarLink={
-          isValidImage(avatarLink) ? avatarLink : '/images/avatar.png'
-        }
-      />
       <PostPageWrapper>
         <PostCard
           postId={postData.data._id}
@@ -103,7 +97,6 @@ export default function PostPage() {
         </Link>
       </PostPageWrapper>
       <AddButton ButtonLink={`/comments/${postData.data._id}/new`} />
-      <Footer />
     </>
   )
 }
@@ -118,6 +111,7 @@ export const PostPageWrapper = styled.div`
   flex-direction: column;
   margin-top: 20px;
   min-height: calc((100vh) * 0.72);
+	margin-top: 40px;
 `
 
 export const PostsWrapper = styled.div`
