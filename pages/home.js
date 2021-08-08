@@ -13,7 +13,7 @@ import { MainContext } from '../context/MainContext'
 export default function HomePage() {
   const { userProfile, avatarLink } = useContext(MainContext)
 
-  if (!userProfile || !avatarLink) {
+  if (Object.keys(userProfile).length === 0) {
     return (
       <SpinnerWrapper>
         <Loader type='ThreeDots' color='#1399ff' height={100} width={100} />
