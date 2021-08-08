@@ -7,15 +7,16 @@ import Loader from 'react-loader-spinner'
 
 /*---> Component <---*/
 export default function HomeBody() {
-  const [error, setError] = useState(null)
   const [allPosts, setAllPosts] = useState([])
+  const [totalPostsCount, setTotalPostsCount] = useState(0)
   const [limit, setLimit] = useState(20)
   const [skip, setSkip] = useState(0)
   const [loading, setLoading] = useState(true)
 
   useEffect(async () => {
     try {
-			setLoading(true)
+      setLoading(true)
+      const totalPosts = await axiosAPI.post.getAllPosts()
       const allNewPosts = await axiosAPI.post.getAllPosts(limit, skip)
       const arr = allPosts.concat(allNewPosts.data)
 
@@ -24,17 +25,18 @@ export default function HomeBody() {
         item.avatarLink = avatar
       })
       setAllPosts(arr)
+      setTotalPostsCount(totalPosts.data.length)
       setLoading(false)
     } catch (e) {
-      setError(e)
+      console.error(e)
     }
   }, [limit, skip])
 
   function handleShowMore() {
-    setSkip(skip + 5)
+    setSkip(skip + 20)
   }
 
-	function isValidImage(url) {
+  function isValidImage(url) {
     let image = new Image()
     image.src = url
     if (image.width > 0 || image.height > 0) {
@@ -70,7 +72,9 @@ export default function HomeBody() {
           />
         ))}
       </PostsWrapper>
-      <ShowMoreButton onClick={handleShowMore}>Show More</ShowMoreButton>
+      {allPosts.length < totalPostsCount ? (
+        <ShowMoreButton onClick={handleShowMore}>Show More</ShowMoreButton>
+      ) : null}
     </ProfileBodyWrapper>
   )
 }
