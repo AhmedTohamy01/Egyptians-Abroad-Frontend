@@ -1,8 +1,8 @@
 import styled from 'styled-components'
+import Link from 'next/link'
 
 /*---> Component <---*/
 export default function CommentsCard({ comments }) {
-
 	function isValidImage(url) {
     let image = new Image()
     image.src = url
@@ -18,15 +18,17 @@ export default function CommentsCard({ comments }) {
       <CommentsTitle>Comments</CommentsTitle>
       {comments.map((item, index) => (
         <CommentWrapper key={index}>
-          <ImageWrapper>
-            <GenericImage
-              src={
-                isValidImage(item.avatarLink)
-                  ? item.avatarLink
-                  : '/images/avatar.png'
-              }
-            />
-          </ImageWrapper>
+          <Link href={`/public-profile/${item.owner}`}>
+            <ImageWrapper>
+              <GenericImage
+                src={
+                  isValidImage(item.avatarLink)
+                    ? item.avatarLink
+                    : '/images/avatar.png'
+                }
+              />
+            </ImageWrapper>
+          </Link>
           <CommentTextWrapper>{item.body}</CommentTextWrapper>
         </CommentWrapper>
       ))}
