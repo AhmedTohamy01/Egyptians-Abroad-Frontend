@@ -16,8 +16,8 @@ export default function PostPage() {
   const [loading, setLoading] = useState(true)
   const [limit, setLimit] = useState(20)
   const [skip, setSkip] = useState(0)
-
-  useEffect(async () => {
+	
+	useEffect(async () => {
     try {
 			setLoading(true)
       const postId = window.location.href.split('/')[4]
@@ -86,6 +86,7 @@ export default function PostPage() {
           title={postData.data.title}
           body={postData.data.body}
           src={postAvatar || '/images/avatar.png'}
+          ownerId={postData.data.owner}
         />
         <CommentsCard comments={commentsData.data} />
         <Link href='/home' passHref>
