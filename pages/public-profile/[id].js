@@ -10,6 +10,7 @@ import styled from 'styled-components'
 import axiosAPI from '../../api/axiosAPI'
 import Button from '@material-ui/core/Button'
 import Link from 'next/link'
+import router from 'next/router'
 
 export default function PublicProfilePage() {
   const { userProfile, avatarLink } = useContext(MainContext)
@@ -68,9 +69,9 @@ export default function PublicProfilePage() {
           <Link href='#' passHref>
             <MessageButton variant='contained'>Send Message</MessageButton>
           </Link>
-          <Link href='/home' passHref>
-            <HomeButton variant='contained'>Back to Home</HomeButton>
-          </Link>
+          <BackButton variant='contained' onClick={() => router.back()}>
+            Back
+          </BackButton>
         </ButtonsWrapper>
         <Footer />
       </PrivateRoute>
@@ -112,7 +113,7 @@ export const MessageButton = styled(Button)`
   }
 `
 
-export const HomeButton = styled(Button)`
+export const BackButton = styled(Button)`
   background: #f0f0f0 !important;
   width: 460px !important;
   height: 40px !important;
