@@ -64,6 +64,9 @@ export default {
     getOnePost(postId) {
       return apiClient.get(`/posts/${postId}`)
     },
+    sendDirectMessage(payload) {
+      return apiClient.post(`/users/message`, payload)
+    },
   },
   comment: {
     addNewComment(postId, payload) {
