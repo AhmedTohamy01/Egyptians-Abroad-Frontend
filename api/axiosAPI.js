@@ -46,6 +46,9 @@ export default {
     logout() {
       return apiClient.post('/users/logout')
     },
+    sendDirectMessage(payload) {
+      return apiClient.post(`/users/message`, payload)
+    },
   },
   post: {
     addNewPost(payload) {
@@ -63,9 +66,6 @@ export default {
     },
     getOnePost(postId) {
       return apiClient.get(`/posts/${postId}`)
-    },
-    sendDirectMessage(payload) {
-      return apiClient.post(`/users/message`, payload)
     },
   },
   comment: {
