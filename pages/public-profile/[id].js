@@ -17,11 +17,13 @@ export default function PublicProfilePage() {
 	const [userPublicProfile, setUserPublicProfile] = useState({})
 	const [userPublicAvatar, setUserPublicAvatar] = useState(null)
 	const [loading, setLoading] = useState(true)
+	const [userId, setUserId] = useState(null)
 
 	useEffect(async () => {
     try {
       setLoading(true)
       const userId = window.location.href.split('/')[4]
+			setUserId(userId)
       const user = await axiosAPI.user.getOtherUserInfo(userId)
       const avatar = user.data.avatar
         ? axiosAPI.user.getUserAvatar(user.data._id)
@@ -66,7 +68,10 @@ export default function PublicProfilePage() {
           avatarLink={userPublicAvatar}
         />
         <ButtonsWrapper>
-          <Link href='#' passHref>
+          <Link
+            href={`/public-profile/${userId}/message`}
+            passHref
+          >
             <MessageButton variant='contained'>Send Message</MessageButton>
           </Link>
           <BackButton variant='contained' onClick={() => router.back()}>
