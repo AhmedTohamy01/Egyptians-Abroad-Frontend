@@ -8,7 +8,8 @@ if (typeof window !== 'undefined') {
 }
 
 const getBaseUrl = () => {
-  return 'http://localhost:5000'
+  // return 'http://localhost:5000'
+	return 'https://egyptians-abroad-backend.herokuapp.com'
 }
 
 const apiClient = axios.create({
