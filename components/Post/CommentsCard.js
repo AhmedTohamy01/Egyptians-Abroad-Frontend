@@ -1,24 +1,40 @@
-import React from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 
 /*---> Component <---*/
 export default function CommentsCard({ comments }) {
+	function isValidImage(url) {
+    let image = new Image()
+    image.src = url
+    if (image.width > 0 || image.height > 0) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   return (
     <CommentsCardWrapper>
       <CommentsTitle>Comments</CommentsTitle>
-      {comments.map((item) => (
-        <CommentWrapper key={item._id}>
-          <ImageWrapper>
-            <GenericImage src='/images/avatar.png' />
-          </ImageWrapper>
+      {comments.map((item, index) => (
+        <CommentWrapper key={index}>
+          <Link href={`/public-profile/${item.owner}`}>
+            <ImageWrapper>
+              <GenericImage
+                src={
+                  isValidImage(item.avatarLink)
+                    ? item.avatarLink
+                    : '/images/avatar.png'
+                }
+              />
+            </ImageWrapper>
+          </Link>
           <CommentTextWrapper>{item.body}</CommentTextWrapper>
         </CommentWrapper>
       ))}
     </CommentsCardWrapper>
   )
 }
-
 
 /*---> Styles <---*/
 
@@ -90,4 +106,3 @@ export const CommentTextWrapper = styled.div`
     font-size: 15px;
   }
 `
-

@@ -1,35 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import axiosAPI from '../../api/axiosAPI'
 
 /*---> Component <---*/
-export default function ProfileHeader() {
-  const [avatarLink, setAvatarLink] = useState(null)
-  const [error, setError] = useState(null)
-  const [userData, setUserData] = useState(null)
-
-  useEffect(async () => {
-    try {
-      const user = await axiosAPI.user.getMyUserInfo()
-      const avatar = user.data.avatar
-        ? await axiosAPI.user.getUserAvatar(user.data._id)
-        : null
-      setUserData(user)
-			setAvatarLink(avatar)
-    } catch (e) {
-      setError(e)
-    }
-  }, [])
+export default function ProfileHeader({ userProfile, avatarLink }) {
 
   return (
     <ProfileHeaderWrapper>
       <AvatarWrapper>
-        <AvatarImage src={avatarLink || 'images/avatar.png'} alt='avatar big' />
+        <AvatarImage src={avatarLink || '/images/avatar.png'} alt='avatar big' />
       </AvatarWrapper>
-      <ProfileName>{userData?.data.name}</ProfileName>
-      <ProfileBio>{userData?.data.bio}</ProfileBio>
+      <ProfileName>{userProfile?.data.name}</ProfileName>
+      <ProfileBio>{userProfile?.data.bio}</ProfileBio>
       <CountryCity>
-        {userData?.data.city}, {userData?.data.country}
+        {userProfile?.data.city}, {userProfile?.data.country}
       </CountryCity>
     </ProfileHeaderWrapper>
   )

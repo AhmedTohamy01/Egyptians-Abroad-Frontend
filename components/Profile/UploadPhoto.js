@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
 import AvatarEditor from 'react-avatar-editor'
@@ -6,34 +6,22 @@ import IconButton from '@material-ui/core/IconButton'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import { LeftArrowAlt } from '@styled-icons/boxicons-regular/LeftArrowAlt'
 import axiosAPI from '../../api/axiosAPI'
+import { MainContext } from '../../context/MainContext'
+import Loader from 'react-loader-spinner'
 
 /*---> Component <---*/
 export default function UploadPhoto() {
   const [newImageAdded, setNewImageAdded] = useState(false)
   const [newImage, setNewImage] = useState(null)
-  const [newImageURL, setNewImageURL] = useState(null)
   const [loading, setLoading] = useState(false)
   const [editor, setEditor] = useState(null)
   const [position, setPosition] = useState({ x: 0.5, y: 0.5 })
   const [scale, setScale] = useState(1)
-  const [avatarLink, setAvatarLink] = useState(null)
   const [error, setError] = useState(null)
-
-  useEffect(async () => {
-    try {
-      const user = await axiosAPI.user.getMyUserInfo()
-      const avatar = user.data.avatar
-        ? await axiosAPI.user.getUserAvatar(user.data._id)
-        : '/images/avatar.png'
-      setAvatarLink(avatar)
-    } catch (e) {
-      setError(e)
-    }
-  }, [])
+  const { userProfile, avatarLink } = useContext(MainContext)
 
   function handleNewImageSelect(event) {
     setNewImageAdded(true)
-		setNewImageURL(null)
     setNewImage(event.target.files[0])
     setScale(1)
   }
@@ -54,15 +42,24 @@ export default function UploadPhoto() {
     formData.append('avatar', newImage)
     const user = await axiosAPI.user.getMyUserInfo()
     await axiosAPI.user.uploadMyUserAvatar(formData)
-    const uploadedImage = await axiosAPI.user.getUserAvatar(user.data._id)
-  	setNewImageURL(uploadedImage)
-    setNewImageAdded(false)
-    setLoading(false)
+    location.reload()
+    setTimeout(() => {
+      setNewImageAdded(false)
+      setLoading(false)
+    }, 1000)
   }
 
   function handleCancel() {
     setNewImageAdded(false)
     setLoading(false)
+  }
+
+  if (Object.keys(userProfile).length === 0) {
+    return (
+      <SpinnerWrapper>
+        <Loader type='ThreeDots' color='#1399ff' height={100} width={100} />
+      </SpinnerWrapper>
+    )
   }
 
   return (
@@ -90,10 +87,9 @@ export default function UploadPhoto() {
                 onPositionChange={handlePositionChange}
               />
             ) : (
-              <Image src={newImageURL || avatarLink} alt='avatar big' />
+              <Image src={avatarLink || '/images/avatar.png'} alt='avatar big' />
             )}
           </ImageWrapper>
-
           <UploadButtonWrapper newImageAdded={newImageAdded} loading={loading}>
             <UploadInput
               id='upload-photo'
@@ -112,9 +108,7 @@ export default function UploadPhoto() {
               </CameraButton>
             </UploadLabel>
           </UploadButtonWrapper>
-
           <Spinner loading={loading} src='/images/spinner.gif' />
-
           <ZoomWrapper newImageAdded={newImageAdded} loading={loading}>
             <ZoomLabel>Zoom:</ZoomLabel>
             <ZoomBar
@@ -128,7 +122,6 @@ export default function UploadPhoto() {
               defaultValue={1}
             />
           </ZoomWrapper>
-
           <ButtonsWrapper newImageAdded={newImageAdded} loading={loading}>
             <CancelButton
               variant='contained'
@@ -331,4 +324,13 @@ export const ZoomBar = styled.input`
   /* border: 1px solid yellow; */
   cursor: grab;
   width: 200px;
+`
+
+export const SpinnerWrapper = styled.div`
+  /* border: 1px solid red; */
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

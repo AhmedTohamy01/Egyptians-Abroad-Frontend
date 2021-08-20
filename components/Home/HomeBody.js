@@ -3,17 +3,20 @@ import styled from 'styled-components'
 import axiosAPI from '../../api/axiosAPI'
 import GenericCard from '../Post/GenericCard'
 import Button from '@material-ui/core/Button'
+import Loader from 'react-loader-spinner'
 
 /*---> Component <---*/
 export default function HomeBody() {
-  const [error, setError] = useState(null)
   const [allPosts, setAllPosts] = useState([])
+  const [totalPostsCount, setTotalPostsCount] = useState(0)
   const [limit, setLimit] = useState(20)
   const [skip, setSkip] = useState(0)
   const [loading, setLoading] = useState(true)
 
   useEffect(async () => {
     try {
+      setLoading(true)
+      const totalPosts = await axiosAPI.post.getAllPosts()
       const allNewPosts = await axiosAPI.post.getAllPosts(limit, skip)
       const arr = allPosts.concat(allNewPosts.data)
 
@@ -22,14 +25,15 @@ export default function HomeBody() {
         item.avatarLink = avatar
       })
       setAllPosts(arr)
+      setTotalPostsCount(totalPosts.data.length)
       setLoading(false)
     } catch (e) {
-      setError(e)
+      console.error(e)
     }
   }, [limit, skip])
 
   function handleShowMore() {
-    setSkip(skip + 5)
+    setSkip(skip + 20)
   }
 
   function isValidImage(url) {
@@ -43,18 +47,22 @@ export default function HomeBody() {
   }
 
   if (loading) {
-    return <>loading ...</>
+    return (
+      <SpinnerWrapper>
+        <Loader type='ThreeDots' color='#1399ff' height={100} width={100} />
+      </SpinnerWrapper>
+    )
   }
 
   return (
     <ProfileBodyWrapper>
       <PostsTitle>All Posts</PostsTitle>
       <PostsWrapper>
-        {allPosts.map((item) => (
+        {allPosts.map((item, index) => (
           <GenericCard
-            key={item._id}
+            key={index}
             ownerId={item.owner}
-						postId={item._id}
+            postId={item._id}
             title={item.title}
             src={
               isValidImage(item.avatarLink)
@@ -64,7 +72,9 @@ export default function HomeBody() {
           />
         ))}
       </PostsWrapper>
-      <ShowMoreButton onClick={handleShowMore}>Show More</ShowMoreButton>
+      {allPosts.length < totalPostsCount ? (
+        <ShowMoreButton onClick={handleShowMore}>Show More</ShowMoreButton>
+      ) : null}
     </ProfileBodyWrapper>
   )
 }
@@ -106,4 +116,14 @@ export const ShowMoreButton = styled(Button)`
   text-transform: initial !important;
   color: white !important;
   font-size: 16px !important;
+`
+
+export const SpinnerWrapper = styled.div`
+  /* border: 1px solid red; */
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
