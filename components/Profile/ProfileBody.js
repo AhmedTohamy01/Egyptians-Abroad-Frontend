@@ -43,7 +43,7 @@ export default function ProfileBody({ avatarLink }) {
     return (
       <ProfileBodyWrapper>
         <PostsTitle>My Posts</PostsTitle>
-        <NoPostsWrapper>You don't have any posts yet !</NoPostsWrapper>
+        <NoPostsWrapper>You do not have any posts yet !</NoPostsWrapper>
         <Link href='/home' passHref>
           <HomeButton variant='contained'>Back to Home</HomeButton>
         </Link>
