@@ -14,16 +14,16 @@ import router from 'next/router'
 
 export default function PublicProfilePage() {
   const { userProfile, avatarLink } = useContext(MainContext)
-	const [userPublicProfile, setUserPublicProfile] = useState({})
-	const [userPublicAvatar, setUserPublicAvatar] = useState(null)
-	const [loading, setLoading] = useState(true)
-	const [userId, setUserId] = useState(null)
+  const [userPublicProfile, setUserPublicProfile] = useState({})
+  const [userPublicAvatar, setUserPublicAvatar] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [userId, setUserId] = useState(null)
 
-	useEffect(async () => {
+  useEffect(async () => {
     try {
       setLoading(true)
       const userId = window.location.href.split('/')[4]
-			setUserId(userId)
+      setUserId(userId)
       const user = await axiosAPI.user.getOtherUserInfo(userId)
       const avatar = user.data.avatar
         ? axiosAPI.user.getUserAvatar(user.data._id)
@@ -45,42 +45,22 @@ export default function PublicProfilePage() {
   }
 
   return (
-    <>
-      <Head>
-        <title>Egyptians Abroad</title>
-        <meta charSet='utf-8' />
-        <meta
-          name='description'
-          content='website to connect egyptians abroad and answer their questions'
-        />
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-        <link rel='icon' href='/favicon.ico' />
-        <link rel='preconnect' href='https://fonts.gstatic.com' />
-        <link
-          href='https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap'
-          rel='stylesheet'
-        />
-      </Head>
-      <PrivateRoute>
-        <HomeNavbar userProfile={userProfile} avatarLink={avatarLink} />
-        <ProfileHeader
-          userProfile={userPublicProfile}
-          avatarLink={userPublicAvatar}
-        />
-        <ButtonsWrapper>
-          <Link
-            href={`/public-profile/${userId}/message`}
-            passHref
-          >
-            <MessageButton variant='contained'>Send Message</MessageButton>
-          </Link>
-          <BackButton variant='contained' onClick={() => router.back()}>
-            Back
-          </BackButton>
-        </ButtonsWrapper>
-        <Footer />
-      </PrivateRoute>
-    </>
+    <PrivateRoute>
+      <HomeNavbar userProfile={userProfile} avatarLink={avatarLink} />
+      <ProfileHeader
+        userProfile={userPublicProfile}
+        avatarLink={userPublicAvatar}
+      />
+      <ButtonsWrapper>
+        <Link href={`/public-profile/${userId}/message`} passHref>
+          <MessageButton variant='contained'>Send Message</MessageButton>
+        </Link>
+        <BackButton variant='contained' onClick={() => router.back()}>
+          Back
+        </BackButton>
+      </ButtonsWrapper>
+      <Footer />
+    </PrivateRoute>
   )
 }
 
@@ -97,9 +77,9 @@ export const SpinnerWrapper = styled.div`
 export const ButtonsWrapper = styled.div`
   /* border: 1px solid red; */
   display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 export const MessageButton = styled(Button)`

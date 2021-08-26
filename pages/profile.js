@@ -12,7 +12,7 @@ import styled from 'styled-components'
 export default function ProfilePage() {
   const { userProfile, avatarLink } = useContext(MainContext)
 
-	if (Object.keys(userProfile).length === 0) {
+  if (Object.keys(userProfile).length === 0) {
     return (
       <SpinnerWrapper>
         <Loader type='ThreeDots' color='#1399ff' height={100} width={100} />
@@ -21,29 +21,12 @@ export default function ProfilePage() {
   }
 
   return (
-    <>
-      <Head>
-        <title>Egyptians Abroad</title>
-        <meta charSet='utf-8' />
-        <meta
-          name='description'
-          content='website to connect egyptians abroad and answer their questions'
-        />
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-        <link rel='icon' href='/favicon.ico' />
-        <link rel='preconnect' href='https://fonts.gstatic.com' />
-        <link
-          href='https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap'
-          rel='stylesheet'
-        />
-      </Head>
-      <PrivateRoute>
-        <HomeNavbar userProfile={userProfile} avatarLink={avatarLink} />
-        <ProfileHeader userProfile={userProfile} avatarLink={avatarLink} />
-        <ProfileBody avatarLink={avatarLink} />
-        <Footer />
-      </PrivateRoute>
-    </>
+    <PrivateRoute>
+      <HomeNavbar userProfile={userProfile} avatarLink={avatarLink} />
+      <ProfileHeader userProfile={userProfile} avatarLink={avatarLink} />
+      <ProfileBody avatarLink={avatarLink} />
+      <Footer />
+    </PrivateRoute>
   )
 }
 
