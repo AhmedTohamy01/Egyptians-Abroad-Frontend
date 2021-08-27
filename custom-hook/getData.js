@@ -10,7 +10,7 @@ export default function getData() {
 			try {
         const user = await axiosAPI.user.getMyUserInfo()
         const avatar = user.data.avatar
-          ? await axiosAPI.user.getUserAvatar(user.data._id)
+          ? axiosAPI.user.getUserAvatar(user.data._id)
           : null
         setUserProfile(user)
         setAvatarLink(avatar)
