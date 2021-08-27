@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import axiosAPI from '../../api/axiosAPI'
+import Loader from 'react-loader-spinner'
 
 /*---> Component <---*/
 export default function GenericCard({ src, title, postId, ownerId }) {
   const [imageUrl, setImageUrl] = useState(src)
-  const [loading, setLoading] = useState(true)
+  const [avatarLoading, setAvatarLoading] = useState(true)
 
   useEffect(() => {
     async function getAvatar() {
@@ -14,21 +15,21 @@ export default function GenericCard({ src, title, postId, ownerId }) {
       if (!user.data.avatar) {
         setImageUrl('/images/avatar.png')
       }
-      setLoading(false)
+      setAvatarLoading(false)
     }
     getAvatar()
   }, [])
-
-	// if (loading) {
-	// 	return <>Loading</>
-	// }
 
   return (
     <Link href={`/posts/${postId}`}>
       <GenericWrapper>
         <Link href={`/public-profile/${ownerId}`}>
           <GenericImageWrapper>
-            <GenericImage src={imageUrl} />
+            {avatarLoading ? (
+              <Loader type='TailSpin' color='#1399ff' height={30} width={30} />
+            ) : (
+              <GenericImage src={imageUrl} />
+            )}
           </GenericImageWrapper>
         </Link>
         <GenericTextWrapper>
@@ -68,6 +69,9 @@ export const GenericImageWrapper = styled.div`
   /* border: 1px solid red; */
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 65px;
 `
 
 export const GenericImage = styled.img`
