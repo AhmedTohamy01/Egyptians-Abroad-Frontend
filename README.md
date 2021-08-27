@@ -13,6 +13,8 @@
  This is a MERN-Stack social network web application to connect Egyptians abroad built using <strong><em>Next.JS & Styled-Components</em></strong> in Frontend and <strong><em>Node.JS, Express.JS & MongoDB</em></strong> in Backend. 
   <br><br> 
   <strong><em>Take a look at the live version here:</em></strong> https://egyptians-abroad.vercel.app :octocat: :heart_eyes:
+  <br><br>
+  <strong><em>Take a look at the backend repo here:</em></strong> https://github.com/AhmedTohamy01/Egyptians-Abroad-Backend :octocat: :heart_eyes:
 </p>
 
 ## Table of Contents
