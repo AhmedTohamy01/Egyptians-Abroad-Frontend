@@ -1,15 +1,34 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import axiosAPI from '../../api/axiosAPI'
 
 /*---> Component <---*/
 export default function GenericCard({ src, title, postId, ownerId }) {
+  const [imageUrl, setImageUrl] = useState(src)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function getAvatar() {
+      const user = await axiosAPI.user.getOtherUserInfo(ownerId)
+      if (!user.data.avatar) {
+        setImageUrl('/images/avatar.png')
+      }
+      setLoading(false)
+    }
+    getAvatar()
+  }, [])
+
+	// if (loading) {
+	// 	return <>Loading</>
+	// }
+
   return (
     <Link href={`/posts/${postId}`}>
       <GenericWrapper>
         <Link href={`/public-profile/${ownerId}`}>
           <GenericImageWrapper>
-            <GenericImage src={src} />
+            <GenericImage src={imageUrl} />
           </GenericImageWrapper>
         </Link>
         <GenericTextWrapper>
@@ -19,7 +38,6 @@ export default function GenericCard({ src, title, postId, ownerId }) {
     </Link>
   )
 }
-
 
 /*---> Styles <---*/
 
@@ -58,6 +76,11 @@ export const GenericImage = styled.img`
   height: 60px;
   border-radius: 10px;
   margin-right: 12px;
+
+  img[alt] {
+    margin-left: -16px;
+    text-indent: 16px;
+  }
 `
 
 export const GenericTextWrapper = styled.div`
@@ -82,4 +105,3 @@ export const GenericTitle = styled.p`
     font-size: 15px;
   }
 `
-
