@@ -6,7 +6,7 @@
   <img title="MERN" src="https://www.mindinventory.com/blog/wp-content/uploads/2021/06/mern-stack.png" alt="MERN" width="500" />
  
   <br>
-  MERN-Stack Social Network Web Application Built Using Next.JS, Styled-Components, MondoDB, Node.JS & Express.JS
+  MERN-Stack Social Network Built Using Next.JS, Styled-Components, MondoDB, Node.JS & Express.JS
 </h1>
 
 <p><font size="3">
