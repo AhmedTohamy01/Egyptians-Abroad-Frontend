@@ -14,17 +14,20 @@ export default function ProfileBody({ avatarLink }) {
   const [skip, setSkip] = useState(0)
   const [loading, setLoading] = useState(true)
 
-  useEffect(async () => {
-    try {
-      setLoading(true)
-      const userNewPosts = await axiosAPI.post.getMyUserPosts(limit, skip)
-      const AllPosts = await axiosAPI.post.getMyUserPosts()
-      setUserPosts(userPosts.concat(userNewPosts.data))
-      setUserPostsCount(AllPosts.data.length)
-      setLoading(false)
-    } catch (e) {
-      setError(e)
-    }
+  useEffect(() => {
+		async function getPosts() {
+			try {
+        setLoading(true)
+        const userNewPosts = await axiosAPI.post.getMyUserPosts(limit, skip)
+        const AllPosts = await axiosAPI.post.getMyUserPosts()
+        setUserPosts(userPosts.concat(userNewPosts.data))
+        setUserPostsCount(AllPosts.data.length)
+        setLoading(false)
+      } catch (e) {
+        setError(e)
+      }
+		}
+    getPosts()
   }, [limit, skip])
 
   async function handleShowMore() {

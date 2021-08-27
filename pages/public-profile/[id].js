@@ -19,21 +19,24 @@ export default function PublicProfilePage() {
   const [loading, setLoading] = useState(true)
   const [userId, setUserId] = useState(null)
 
-  useEffect(async () => {
-    try {
-      setLoading(true)
-      const userId = window.location.href.split('/')[4]
-      setUserId(userId)
-      const user = await axiosAPI.user.getOtherUserInfo(userId)
-      const avatar = user.data.avatar
-        ? axiosAPI.user.getUserAvatar(user.data._id)
-        : null
-      setUserPublicProfile(user)
-      setUserPublicAvatar(avatar)
-      setLoading(false)
-    } catch (e) {
-      console.error(e)
-    }
+  useEffect(() => {
+		async function getPublicProfile() {
+			try {
+        setLoading(true)
+        const userId = window.location.href.split('/')[4]
+        setUserId(userId)
+        const user = await axiosAPI.user.getOtherUserInfo(userId)
+        const avatar = user.data.avatar
+          ? axiosAPI.user.getUserAvatar(user.data._id)
+          : null
+        setUserPublicProfile(user)
+        setUserPublicAvatar(avatar)
+        setLoading(false)
+      } catch (e) {
+        console.error(e)
+      }
+		}
+    getPublicProfile()
   }, [])
 
   if (loading) {

@@ -27,19 +27,22 @@ export default function BasicInfo() {
   const [error, setError] = useState('')
   const [showErrorMessage, setShowErrorMessage] = useState(false)
 
-  useEffect(async () => {
-    try {
-      const user = await axiosAPI.user.getMyUserInfo()
-      setNameInputValue(user.data.name)
-      setBioInputValue(user.data.bio)
-      setCountryInputValue(user.data.country)
-      setCityInputValue(user.data.city)
-      setPhoneInputValue(user.data.phone)
-      setInterestedIn(user.data.interested_in)
-      setTopicsOfInterest(user.data.topics_of_interest)
-    } catch (e) {
-      console.error(e)
-    }
+  useEffect(() => {
+		async function getBasicInfo() {
+			try {
+        const user = await axiosAPI.user.getMyUserInfo()
+        setNameInputValue(user.data.name)
+        setBioInputValue(user.data.bio)
+        setCountryInputValue(user.data.country)
+        setCityInputValue(user.data.city)
+        setPhoneInputValue(user.data.phone)
+        setInterestedIn(user.data.interested_in)
+        setTopicsOfInterest(user.data.topics_of_interest)
+      } catch (e) {
+        console.error(e)
+      }
+		}
+    getBasicInfo()
   }, [])
 
   ////////////////////////////////

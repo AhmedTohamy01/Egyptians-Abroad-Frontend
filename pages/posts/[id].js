@@ -17,31 +17,34 @@ export default function PostPage() {
   const [limit, setLimit] = useState(20)
   const [skip, setSkip] = useState(0)
 
-  useEffect(async () => {
-    try {
-      setLoading(true)
-      const postId = window.location.href.split('/')[4]
-      const post = await axiosAPI.post.getOnePost(postId)
-      const user = await axiosAPI.user.getOtherUserInfo(post.data.owner)
-      const avatar = user.data.avatar
-        ? axiosAPI.user.getUserAvatar(user.data._id)
-        : null
-      const comments = await axiosAPI.comment.getPostComments(
-        postId,
-        limit,
-        skip
-      )
-      comments.data.forEach((item) => {
-        const avatar = axiosAPI.user.getUserAvatar(item.owner)
-        item.avatarLink = avatar
-      })
-      setPostData(post)
-      setPostAvatar(avatar)
-      setCommentsData(comments)
-      setLoading(false)
-    } catch (e) {
-      console.error(e)
-    }
+  useEffect(() => {
+		async function getPostDetails() {
+			try {
+        setLoading(true)
+        const postId = window.location.href.split('/')[4]
+        const post = await axiosAPI.post.getOnePost(postId)
+        const user = await axiosAPI.user.getOtherUserInfo(post.data.owner)
+        const avatar = user.data.avatar
+          ? axiosAPI.user.getUserAvatar(user.data._id)
+          : null
+        const comments = await axiosAPI.comment.getPostComments(
+          postId,
+          limit,
+          skip
+        )
+        comments.data.forEach((item) => {
+          const avatar = axiosAPI.user.getUserAvatar(item.owner)
+          item.avatarLink = avatar
+        })
+        setPostData(post)
+        setPostAvatar(avatar)
+        setCommentsData(comments)
+        setLoading(false)
+      } catch (e) {
+        console.error(e)
+      }
+		}
+    getPostDetails()
   }, [limit, skip])
 
   if (loading) {

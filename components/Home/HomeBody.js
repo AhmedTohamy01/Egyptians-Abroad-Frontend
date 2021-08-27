@@ -13,23 +13,26 @@ export default function HomeBody() {
   const [skip, setSkip] = useState(0)
   const [loading, setLoading] = useState(true)
 
-  useEffect(async () => {
-    try {
-      setLoading(true)
-      const totalPosts = await axiosAPI.post.getAllPosts()
-      const allNewPosts = await axiosAPI.post.getAllPosts(limit, skip)
-      const arr = allPosts.concat(allNewPosts.data)
+  useEffect( () => {
+		async function getPosts() {
+			try {
+        setLoading(true)
+        const totalPosts = await axiosAPI.post.getAllPosts()
+        const allNewPosts = await axiosAPI.post.getAllPosts(limit, skip)
+        const arr = allPosts.concat(allNewPosts.data)
 
-      arr.forEach((item) => {
-        const avatar = axiosAPI.user.getUserAvatar(item.owner)
-        item.avatarLink = avatar
-      })
-      setAllPosts(arr)
-      setTotalPostsCount(totalPosts.data.length)
-      setLoading(false)
-    } catch (e) {
-      console.error(e)
-    }
+        arr.forEach((item) => {
+          const avatar = axiosAPI.user.getUserAvatar(item.owner)
+          item.avatarLink = avatar
+        })
+        setAllPosts(arr)
+        setTotalPostsCount(totalPosts.data.length)
+        setLoading(false)
+      } catch (e) {
+        console.error(e)
+      }
+		}
+    getPosts()
   }, [limit, skip])
 
   function handleShowMore() {
