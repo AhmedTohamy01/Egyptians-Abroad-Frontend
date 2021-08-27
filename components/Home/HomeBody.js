@@ -36,16 +36,6 @@ export default function HomeBody() {
     setSkip(skip + 20)
   }
 
-  function isValidImage(url) {
-    let image = new Image()
-    image.src = url
-    if (image.width > 0 || image.height > 0) {
-      return true
-    } else {
-      return false
-    }
-  }
-
   if (loading) {
     return (
       <SpinnerWrapper>
@@ -64,11 +54,7 @@ export default function HomeBody() {
             ownerId={item.owner}
             postId={item._id}
             title={item.title}
-            src={
-              isValidImage(item.avatarLink)
-                ? item.avatarLink
-                : '/images/avatar.png'
-            }
+            src={item.avatarLink}
           />
         ))}
       </PostsWrapper>
