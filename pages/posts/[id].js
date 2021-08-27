@@ -44,16 +44,6 @@ export default function PostPage() {
     }
   }, [limit, skip])
 
-  function isValidImage(url) {
-    let image = new Image()
-    image.src = url
-    if (image.width > 0 || image.height > 0) {
-      return true
-    } else {
-      return false
-    }
-  }
-
   if (loading) {
     return (
       <SpinnerWrapper>
