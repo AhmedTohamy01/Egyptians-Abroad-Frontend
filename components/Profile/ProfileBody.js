@@ -16,7 +16,7 @@ export default function ProfileBody({ avatarLink }) {
 
   useEffect(async () => {
     try {
-			setLoading(true)
+      setLoading(true)
       const userNewPosts = await axiosAPI.post.getMyUserPosts(limit, skip)
       const AllPosts = await axiosAPI.post.getMyUserPosts()
       setUserPosts(userPosts.concat(userNewPosts.data))
@@ -60,6 +60,8 @@ export default function ProfileBody({ avatarLink }) {
             key={index}
             src={avatarLink || '/images/avatar.png'}
             title={item.title}
+            ownerId={item.owner}
+            postId={item._id}
           />
         ))}
       </PostsWrapper>
