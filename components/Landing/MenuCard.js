@@ -20,7 +20,7 @@ function MenuCard() {
         </LinkWrapper>
         <LinkWrapper>
           <Link href='/signup' passHref>
-            <MenuLink onClick={() => setActiveSignForm('signup')}>
+            <MenuLink>
               Answer Questions
             </MenuLink>
           </Link>
