@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import validator from 'validator'
@@ -46,13 +45,13 @@ export default function LoginPage() {
 
   async function handleSubmit(event) {
     event.preventDefault()
-    await isValidEmail()
-    await isValidPassword()
+    isValidEmail()
+    isValidPassword()
 
     if (isValidEmail() && isValidPassword()) {
       try {
         const user = await axiosAPI.user.login({ email, password })
-        await localStorage.setItem(
+        localStorage.setItem(
           'EgAbroadToken',
           user.data.tokens[user.data.tokens.length - 1].token
         )
