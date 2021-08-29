@@ -26,10 +26,10 @@ export default function UploadPhoto() {
     setScale(1)
   }
 
-  const handleZoomBar = (e) => {
-    let newScale = parseFloat(e.target.value)
-    setScale(newScale)
-  }
+  // const handleZoomBar = (e) => {
+  //   let newScale = parseFloat(e.target.value)
+  //   setScale(newScale)
+  // }
 
   const handlePositionChange = (position) => {
     setPosition(position)
@@ -87,7 +87,10 @@ export default function UploadPhoto() {
                 onPositionChange={handlePositionChange}
               />
             ) : (
-              <Image src={avatarLink || '/images/avatar.png'} alt='avatar big' />
+              <Image
+                src={avatarLink || '/images/avatar.png'}
+                alt='avatar big'
+              />
             )}
           </ImageWrapper>
           <UploadButtonWrapper newImageAdded={newImageAdded} loading={loading}>
@@ -110,7 +113,7 @@ export default function UploadPhoto() {
           </UploadButtonWrapper>
           <Spinner loading={loading} src='/images/spinner.gif' />
           <ZoomWrapper newImageAdded={newImageAdded} loading={loading}>
-            <ZoomLabel>Zoom:</ZoomLabel>
+            {/* <ZoomLabel>Zoom:</ZoomLabel>
             <ZoomBar
               name='scale'
               type='range'
@@ -120,7 +123,7 @@ export default function UploadPhoto() {
               step='0.01'
               value={scale}
               defaultValue={1}
-            />
+            /> */}
           </ZoomWrapper>
           <ButtonsWrapper newImageAdded={newImageAdded} loading={loading}>
             <CancelButton
